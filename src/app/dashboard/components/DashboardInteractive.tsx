@@ -87,7 +87,7 @@ export default function DashboardInteractive() {
   const [equipeError, setEquipeError] = useState<string | null>(null);
   const [teamMembersState, setTeamMembersState] = useState<TeamMember[] | null>(null);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
-  const [currentUserRole, setCurrentUserRole] = useState<'commercial' | 'admin' | null>(null);
+  const [currentUserRole, setCurrentUserRole] = useState<'commercial' | 'admin' | 'consultant' | null>(null);
 
   useEffect(() => {
     setIsHydrated(true);
@@ -113,6 +113,8 @@ export default function DashboardInteractive() {
         setCurrentUserRole('admin');
       } else if (stored.role === 'commercial') {
         setCurrentUserRole('commercial');
+      } else if (stored.role === 'consultant') {
+        setCurrentUserRole('consultant');
       }
     } catch {
       // ignore malformed localStorage
@@ -132,7 +134,17 @@ export default function DashboardInteractive() {
 
   const canManageVisite = (visite: Visite): boolean => {
     if (!currentUserId) return false;
+    // Seuls l'admin et le propriétaire peuvent modifier/supprimer
     if (currentUserRole === 'admin') return true;
+    return visite.commercial_id === currentUserId;
+  };
+
+  const canViewSensitive = (visite: Visite): boolean => {
+    if (!currentUserId) return false;
+    // Admin et consultant voient toujours tout, le commercial uniquement ses visites
+    if (currentUserRole === 'admin' || currentUserRole === 'consultant') {
+      return true;
+    }
     return visite.commercial_id === currentUserId;
   };
 
@@ -292,7 +304,14 @@ export default function DashboardInteractive() {
           const baseAvatar = baseAvatars[index % baseAvatars.length];
           const fullName = `${member.prenom ?? ''} ${member.nom ?? ''}`.trim();
 
-          const displayRole = member.role === 'admin' ? 'Admin' : 'Commercial';
+          let displayRole: string;
+          if (member.role === 'admin') {
+            displayRole = 'Admin';
+          } else if (member.role === 'consultant') {
+            displayRole = 'Consultant';
+          } else {
+            displayRole = 'Commercial';
+          }
 
           return {
             id: index + 1,
@@ -752,7 +771,7 @@ export default function DashboardInteractive() {
                                 </span>
                               </td>
                               <td className="px-3 py-3 md:px-4 text-xs text-foreground hidden lg:table-cell whitespace-nowrap">
-                                {canManage
+                                {canViewSensitive(visite)
                                   ? typeof visite.montant === 'number'
                                     ? `${visite.montant.toLocaleString('fr-FR')} DT`
                                     : '—'
@@ -761,7 +780,7 @@ export default function DashboardInteractive() {
                                   : '—'}
                               </td>
                               <td className="px-3 py-3 md:px-4 text-xs text-foreground hidden lg:table-cell">
-                                {canManage
+                                {canViewSensitive(visite)
                                   ? typeof visite.probabilite === 'number'
                                     ? `${visite.probabilite}%`
                                     : '—'

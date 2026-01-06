@@ -1,4 +1,4 @@
-export type Role = 'commercial' | 'admin'
+export type Role = 'commercial' | 'admin' | 'consultant'
 export type StatutVisite = 'a_faire' | 'en_cours' | 'termine'
 export type StatutAction = 'en_attente' | 'accepte' | 'refuse'
 
