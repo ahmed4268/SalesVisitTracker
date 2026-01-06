@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import ParticleBackground from './ParticleBackground';
 import FloatingOrbs from './FloatingOrbs';
 import GlassmorphicCard from './GlassmorphicCard';
@@ -40,26 +41,19 @@ export default function LoginInteractive() {
 
           <div className="text-center mb-8 animate-slide-in-from-top">
             <div className="flex items-center justify-center mb-6">
-              <div className="relative">
-                <div className="w-20 h-20 bg-gradient-to-br from-violet-600 to-purple-600 rounded-2xl flex items-center justify-center transform transition-smooth hover:scale-110 hover:rotate-6 shadow-2xl">
-                  <svg
-                    className="w-12 h-12 text-white"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-violet-400 rounded-full animate-pulse" />
-              </div>
+              <Image
+                src="/assets/images/image001.png"
+                alt="SalesTracker Pro"
+                width={500}
+                height={500}
+                className="w-40 sm:w-52 md:w-64 h-auto drop-shadow-[0_0_40px_rgba(167,139,250,0.9)]"
+                priority
+              />
             </div>
-            <h1 className="text-4xl font-bold text-white mb-2 tracking-tight">
+
+            <h4 className="text-4xl font-bold text-white mb-2 tracking-tight">
               SalesTracker Pro
-            </h1>
+            </h4>
             <p className="text-slate-400 text-sm">
               Plateforme de gestion des visites commerciales
             </p>

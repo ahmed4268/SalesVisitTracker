@@ -44,7 +44,7 @@ export default function AnimatedInput({
           )}
           <input
             type={inputType}
-            className={`w-full px-4 ${iconName ? 'pl-12' : ''} ${
+            className={`w-full px-4 ${iconName ? 'pl-16' : ''} ${
               type === 'password' ? 'pr-12' : ''
             } py-4 bg-white/5 border-2 ${
               error
@@ -60,7 +60,7 @@ export default function AnimatedInput({
           />
           <label
             className={`absolute left-4 ${
-              iconName ? 'left-12' : ''
+              iconName ? 'left-16' : ''
             } transition-all duration-300 pointer-events-none ${
               isFocused || props.value
                 ? '-top-2.5 text-xs bg-slate-900 px-2 text-violet-400'

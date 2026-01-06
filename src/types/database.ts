@@ -16,6 +16,7 @@ export interface Profile {
 export interface Visite {
   id: string
   commercial_id: string
+  commercial_name?: string
   
   // Client
   entreprise: string
@@ -89,4 +90,8 @@ export interface StatsVisites {
   visites_refusees: number
   montant_total: number
   probabilite_moyenne: number
+}
+
+export interface EquipeMember extends Profile {
+  total_visites: number
 }

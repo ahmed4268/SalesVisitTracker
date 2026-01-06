@@ -18,11 +18,6 @@ interface FormErrors {
   general?: string;
 }
 
-const MOCK_CREDENTIALS = {
-  email: 'sales.pro@salestracker.com',
-  password: 'SalesTracker2026!',
-};
-
 export default function LoginForm() {
   const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
@@ -68,20 +63,63 @@ export default function LoginForm() {
     }
 
     setIsLoading(true);
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
 
-    setTimeout(() => {
-      if (
-        formData.email === MOCK_CREDENTIALS.email &&
-        formData.password === MOCK_CREDENTIALS.password
-      ) {
-        router.push('/dashboard');
-      } else {
-        setErrors({
-          general: `Identifiants incorrects. Utilisez: ${MOCK_CREDENTIALS.email} / ${MOCK_CREDENTIALS.password}`,
-        });
+      const data = await response.json().catch(() => null as any);
+
+      if (!response.ok) {
+        setErrors((prev) => ({
+          ...prev,
+          general:
+            data?.error ||
+            "Identifiants incorrects. Veuillez vérifier votre e-mail et votre mot de passe.",
+        }));
         setIsLoading(false);
+        return;
       }
-    }, 1500);
+
+      try {
+        const user = data?.user as
+          | {
+              email?: string;
+              user_metadata?: { nom?: string; prenom?: string; role?: string };
+            }
+          | undefined;
+
+        if (typeof window !== 'undefined' && user) {
+          const fullName = `${user.user_metadata?.prenom ?? ''} ${
+            user.user_metadata?.nom ?? ''
+          }`.trim();
+          const displayName = fullName || user.email || 'Utilisateur';
+          const role = user.user_metadata?.role ?? null;
+
+          window.localStorage.setItem(
+            'stpro_user',
+            JSON.stringify({ displayName, email: user.email ?? null, role })
+          );
+        }
+      } catch {
+        // En cas d'erreur de parsing ou de localStorage, on ignore simplement
+      }
+
+      router.push('/dashboard');
+    } catch (error) {
+      setErrors((prev) => ({
+        ...prev,
+        general: "Une erreur est survenue lors de la connexion. Veuillez réessayer.",
+      }));
+      setIsLoading(false);
+    }
   };
 
   const handleSocialLogin = (provider: string) => {
@@ -214,11 +252,7 @@ export default function LoginForm() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
-        <SocialLoginButton provider="google" onClick={() => handleSocialLogin('google')} />
-        <SocialLoginButton provider="microsoft" onClick={() => handleSocialLogin('microsoft')} />
-        <SocialLoginButton provider="apple" onClick={() => handleSocialLogin('apple')} />
-      </div>
+ 
 
       <p className="text-center text-sm text-slate-400">
         Pas encore de compte?{' '}
