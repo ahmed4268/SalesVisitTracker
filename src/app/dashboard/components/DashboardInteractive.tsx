@@ -57,6 +57,9 @@ interface ChartDataPoint {
   conversions: number;
 }
 
+const DEFAULT_AVATAR_SRC = '/assets/images/user.png';
+const DEFAULT_AVATAR_ALT = 'Photo de profil utilisateur';
+
 export default function DashboardInteractive() {
   const router = useRouter();
   const [isHydrated, setIsHydrated] = useState(false);
@@ -215,40 +218,40 @@ export default function DashboardInteractive() {
         const baseAvatars: TeamMember[] = [
           {
             id: 1,
-            name: "Sophie Martin",
-            role: "Responsable Commercial",
-            avatar: "https://img.rocket.new/generatedImages/rocket_gen_img_1a9e8814c-1763296696290.png",
-            avatarAlt: "Professional headshot of woman with long brown hair in business attire smiling at camera",
-            visitsToday: 8,
-            status: 'active'
+            name: 'Membre 1',
+            role: 'Commercial',
+            avatar: DEFAULT_AVATAR_SRC,
+            avatarAlt: DEFAULT_AVATAR_ALT,
+            visitsToday: 0,
+            status: 'active',
           },
           {
             id: 2,
-            name: "Marc Dubois",
-            role: "Représentant Senior",
-            avatar: "https://img.rocket.new/generatedImages/rocket_gen_img_196174460-1763296831663.png",
-            avatarAlt: "Professional portrait of man with short dark hair in navy suit with confident expression",
-            visitsToday: 6,
-            status: 'active'
+            name: 'Membre 2',
+            role: 'Commercial',
+            avatar: DEFAULT_AVATAR_SRC,
+            avatarAlt: DEFAULT_AVATAR_ALT,
+            visitsToday: 0,
+            status: 'active',
           },
           {
             id: 3,
-            name: "Julie Rousseau",
-            role: "Analyste Commercial",
-            avatar: "https://img.rocket.new/generatedImages/rocket_gen_img_1ab364902-1763296135947.png",
-            avatarAlt: "Business portrait of woman with blonde hair in professional attire with warm smile",
-            visitsToday: 4,
-            status: 'away'
+            name: 'Membre 3',
+            role: 'Commercial',
+            avatar: DEFAULT_AVATAR_SRC,
+            avatarAlt: DEFAULT_AVATAR_ALT,
+            visitsToday: 0,
+            status: 'away',
           },
           {
             id: 4,
-            name: "Thomas Bernard",
-            role: "Représentant",
-            avatar: "https://img.rocket.new/generatedImages/rocket_gen_img_1d4ab3fb5-1763296572207.png",
-            avatarAlt: "Professional headshot of man with beard in gray blazer looking at camera",
-            visitsToday: 5,
-            status: 'active'
-          }
+            name: 'Membre 4',
+            role: 'Commercial',
+            avatar: DEFAULT_AVATAR_SRC,
+            avatarAlt: DEFAULT_AVATAR_ALT,
+            visitsToday: 0,
+            status: 'active',
+          },
         ];
 
         const mapped: TeamMember[] = equipe.map((member, index) => {
@@ -359,76 +362,59 @@ export default function DashboardInteractive() {
   const recentActivities: Activity[] = [
     {
       id: 1,
-      user: "Sophie Martin",
-      action: "a complété une visite chez TechCorp Solutions",
-      time: "Il y a 5 minutes",
-      avatar: "https://img.rocket.new/generatedImages/rocket_gen_img_1a9e8814c-1763296696290.png",
-      avatarAlt: "Professional headshot of woman with long brown hair in business attire smiling at camera",
+      user: 'Sophie Martin',
+      action: 'a complété une visite chez TechCorp Solutions',
+      time: 'Il y a 5 minutes',
+      avatar: DEFAULT_AVATAR_SRC,
+      avatarAlt: DEFAULT_AVATAR_ALT,
       type: 'visit'
     },
     {
       id: 2,
-      user: "Marc Dubois",
-      action: "a ajouté un nouveau client: Innovation Labs",
-      time: "Il y a 12 minutes",
-      avatar: "https://img.rocket.new/generatedImages/rocket_gen_img_196174460-1763296831663.png",
-      avatarAlt: "Professional portrait of man with short dark hair in navy suit with confident expression",
+      user: 'Marc Dubois',
+      action: 'a ajouté un nouveau client: Innovation Labs',
+      time: 'Il y a 12 minutes',
+      avatar: DEFAULT_AVATAR_SRC,
+      avatarAlt: DEFAULT_AVATAR_ALT,
       type: 'client'
     },
-    {
-      id: 3,
-      user: "Julie Rousseau",
-      action: "a généré un rapport de performance trimestriel",
-      time: "Il y a 28 minutes",
-      avatar: "https://img.rocket.new/generatedImages/rocket_gen_img_1ab364902-1763296135947.png",
-      avatarAlt: "Business portrait of woman with blonde hair in professional attire with warm smile",
-      type: 'report'
-    },
-    {
-      id: 4,
-      user: "Thomas Bernard",
-      action: "a planifié 3 nouvelles visites pour demain",
-      time: "Il y a 1 heure",
-      avatar: "https://img.rocket.new/generatedImages/rocket_gen_img_1d4ab3fb5-1763296572207.png",
-      avatarAlt: "Professional headshot of man with beard in gray blazer looking at camera",
-      type: 'visit'
-    }
+    
   ];
 
   const teamMembers: TeamMember[] = [
     {
       id: 1,
-      name: "Sophie Martin",
-      role: "Responsable Commercial",
-      avatar: "https://img.rocket.new/generatedImages/rocket_gen_img_1a9e8814c-1763296696290.png",
-      avatarAlt: "Professional headshot of woman with long brown hair in business attire smiling at camera",
+      name: 'Sophie Martin',
+      role: 'Responsable Commercial',
+      avatar: DEFAULT_AVATAR_SRC,
+      avatarAlt: DEFAULT_AVATAR_ALT,
       visitsToday: 8,
       status: 'active'
     },
     {
       id: 2,
-      name: "Marc Dubois",
-      role: "Représentant Senior",
-      avatar: "https://img.rocket.new/generatedImages/rocket_gen_img_196174460-1763296831663.png",
-      avatarAlt: "Professional portrait of man with short dark hair in navy suit with confident expression",
+      name: 'Marc Dubois',
+      role: 'Représentant Senior',
+      avatar: DEFAULT_AVATAR_SRC,
+      avatarAlt: DEFAULT_AVATAR_ALT,
       visitsToday: 6,
       status: 'active'
     },
     {
       id: 3,
-      name: "Julie Rousseau",
-      role: "Analyste Commercial",
-      avatar: "https://img.rocket.new/generatedImages/rocket_gen_img_1ab364902-1763296135947.png",
-      avatarAlt: "Business portrait of woman with blonde hair in professional attire with warm smile",
+      name: 'Julie Rousseau',
+      role: 'Analyste Commercial',
+      avatar: DEFAULT_AVATAR_SRC,
+      avatarAlt: DEFAULT_AVATAR_ALT,
       visitsToday: 4,
       status: 'away'
     },
     {
       id: 4,
-      name: "Thomas Bernard",
-      role: "Représentant",
-      avatar: "https://img.rocket.new/generatedImages/rocket_gen_img_1d4ab3fb5-1763296572207.png",
-      avatarAlt: "Professional headshot of man with beard in gray blazer looking at camera",
+      name: 'Thomas Bernard',
+      role: 'Représentant',
+      avatar: DEFAULT_AVATAR_SRC,
+      avatarAlt: DEFAULT_AVATAR_ALT,
       visitsToday: 5,
       status: 'active'
     }
@@ -859,20 +845,21 @@ export default function DashboardInteractive() {
                 </div>
               </div>
               <div className="w-full h-96 rounded-xl overflow-hidden border border-border">
-                <iframe
-                  width="100%"
-                  height="100%"
-                  loading="lazy"
-                  title="Carte des Visites Commerciales"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  src="https://www.google.com/maps?q=48.8566,2.3522&z=12&output=embed"
-                  className="w-full h-full">
-                </iframe>
+               <iframe
+  width="100%"
+  height="100%"
+  loading="lazy"
+  title="Carte des Visites Commerciales"
+  referrerPolicy="no-referrer-when-downgrade"
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3192.345209316102!2d10.181806275839527!3d36.85815506443056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12fd35005d7865af%3A0x8807dbfc5a563f39!2sTAGSTREAM!5e0!3m2!1sen!2stn!4v1767671984852!5m2!1sen!2stn"
+  className="w-full h-full"
+>
+</iframe>
               </div>
             </div>
           </div>
         </main>
       </div>
-    </div>);
-
+    </div>
+  );
 }
