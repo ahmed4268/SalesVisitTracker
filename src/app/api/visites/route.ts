@@ -283,10 +283,25 @@ export async function GET(request: Request) {
         }
       }
 
-      return {
+      const visite = {
         ...v,
         commercial_name: commercialName,
       };
+
+      // Sécurité: Masquer les données sensibles côté serveur
+      // Les commerciaux ne voient les montants et probabilités que de leurs propres visites
+      const canViewSensitive =
+        userRole === 'admin' ||
+        userRole === 'consultant' ||
+        commercialId === userData.user.id;
+
+      if (!canViewSensitive) {
+        // Supprimer complètement les champs sensibles (pas juste les masquer)
+        visite.montant = null;
+        visite.probabilite = null;
+      }
+
+      return visite;
     });
 
     return NextResponse.json(
