@@ -174,8 +174,16 @@ export async function GET(request: Request) {
       .select('*', { count: 'exact' })
       .order('date_visite', { ascending: false });
 
-    // Filtrer par commercial si admin/consultant et si un commercial est spécifié
-    if (commercialIdFilter && (userRole === 'admin' || userRole === 'consultant')) {
+    // Log pour debugger
+    console.log('=== FILTRE DEBUG ===');
+    console.log('userRole:', userRole);
+    console.log('commercialIdFilter:', commercialIdFilter);
+    console.log('statutVisite:', statutVisite);
+    console.log('statutAction:', statutAction);
+
+    // Filtrer par commercial - accessible à tous les rôles
+    if (commercialIdFilter) {
+      console.log('✅ Applying commercial filter for:', commercialIdFilter);
       query = query.eq('commercial_id', commercialIdFilter);
     }
 

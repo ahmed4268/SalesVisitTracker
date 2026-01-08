@@ -187,7 +187,7 @@ export default function FilterPanel({
               </select>
             </div>
 
-            {/* Commercial - For all users */}
+            {/* Commercial Filter - Pour tous les utilisateurs */}
             {onCommercialChange && commercials.length > 0 && (
               <div className="space-y-2">
                 <label className="block text-xs font-cta font-semibold text-gray-900">
