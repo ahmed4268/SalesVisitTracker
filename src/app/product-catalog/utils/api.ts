@@ -74,7 +74,21 @@ export async function fetchProducts(): Promise<Product[]> {
     const apiProducts = data.data || [];
     
     // Transform with raw category IDs (mapping done in component)
-    return apiProducts.map(transformApiProductToDesign);
+    const products = apiProducts.map(transformApiProductToDesign);
+    
+    // Deduplicate by ID - keep only the first occurrence
+    const seenIds = new Set<string>();
+    const uniqueProducts = products.filter((product: Product) => {
+      if (seenIds.has(product.id)) {
+        console.warn(`Duplicate product found with ID: ${product.id}, removing...`);
+        return false;
+      }
+      seenIds.add(product.id);
+      return true;
+    });
+    
+    console.log(`Fetched ${apiProducts.length} products, kept ${uniqueProducts.length} unique products`);
+    return uniqueProducts;
   } catch (error) {
     console.error('Erreur lors du chargement des produits:', error);
     throw error;

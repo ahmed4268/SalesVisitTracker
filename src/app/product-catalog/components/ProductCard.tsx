@@ -6,9 +6,12 @@ import { Product } from '../types';
 
 interface ProductCardProps {
   product: Product;
+  isAdmin?: boolean;
+  onEdit?: (product: Product) => void;
+  onDelete?: (product: Product) => void;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, isAdmin, onEdit, onDelete }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   const familyColors = {
@@ -109,7 +112,25 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
 
-      
+        {/* Admin Actions */}
+        {isAdmin && (
+          <div className="flex gap-2 pt-3 border-t border-border">
+            <button
+              onClick={() => onEdit?.(product)}
+              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-blue-100 hover:bg-blue-200 text-blue-700 font-cta text-xs transition-colors"
+            >
+              <Icon name="PencilIcon" size={14} />
+              Éditer
+            </button>
+            <button
+              onClick={() => onDelete?.(product)}
+              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-red-100 hover:bg-red-200 text-red-700 font-cta text-xs transition-colors"
+            >
+              <Icon name="TrashIcon" size={14} />
+              Supprimer
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

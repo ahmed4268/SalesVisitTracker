@@ -4,8 +4,11 @@ import { useState, useMemo, useEffect } from 'react';
 import FilterBar from './FilterBar';
 import ProductGrid from './ProductGrid';
 import EmptyState from './EmptyState';
+import ProductModal from './ProductModal';
+import Icon from '@/components/ui/AppIcon';
 import { Product, ProductFamily } from '../types';
 import { fetchProducts } from '../utils/api';
+import { useAuth } from '@/hooks/useAuth';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -16,15 +19,20 @@ interface CategoryMapping {
 }
 
 export default function ProductCatalogInteractive() {
+  const { isAdmin } = useAuth();
+  
   const [isHydrated, setIsHydrated] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [allCategories, setAllCategories] = useState<{ id: string; nom: string }[]>([]); // Raw categories
+  const [allFamilies, setAllFamilies] = useState<{ id: string; nom: string }[]>([]);
   const [selectedFamily, setSelectedFamily] = useState<ProductFamily | 'ALL'>('ALL');
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
   // Fetch products and categories from API
   useEffect(() => {
@@ -34,19 +42,18 @@ export default function ProductCatalogInteractive() {
         
         // Fetch categories
         const categoriesRes = await fetch('/api/catalogue/categories');
-        console.log('Categories API response status:', categoriesRes.status);
-        
         if (categoriesRes.ok) {
           const categoriesData = await categoriesRes.json();
-          console.log('Raw categories API response:', categoriesData);
-          
           const categories = categoriesData.data || [];
-          console.log('Categories extracted:', categories);
-          console.log('Number of categories:', categories.length);
-          
           setAllCategories(categories);
-        } else {
-          console.error('Categories API error:', categoriesRes.status);
+        }
+        
+        // Fetch families
+        const familiesRes = await fetch('/api/catalogue/familles');
+        if (familiesRes.ok) {
+          const familiesData = await familiesRes.json();
+          const families = familiesData.data || [];
+          setAllFamilies(families);
         }
         
         // Fetch products
@@ -76,11 +83,74 @@ export default function ProductCatalogInteractive() {
     return category?.nom || id;
   };
 
+  // Handle product save (create or update)
+  const handleSaveProduct = async (formData: any) => {
+    try {
+      const url = editingProduct ? `/api/catalogue/produits/${editingProduct.id}` : '/api/catalogue/produits';
+      const method = editingProduct ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Erreur lors de la sauvegarde');
+      }
+
+      // Refresh products
+      const data = await fetchProducts();
+      setProducts(data);
+      setIsModalOpen(false);
+      setEditingProduct(null);
+    } catch (error: any) {
+      throw error;
+    }
+  };
+
+  // Handle product delete
+  const handleDeleteProduct = async (product: Product) => {
+    if (!confirm(`Êtes-vous sûr de vouloir supprimer "${product.name}"?`)) return;
+
+    try {
+      const response = await fetch(`/api/catalogue/produits/${product.id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Erreur lors de la suppression');
+      }
+
+      // Refresh products
+      const data = await fetchProducts();
+      setProducts(data);
+    } catch (error) {
+      console.error('Erreur suppression:', error);
+      alert('Erreur lors de la suppression du produit');
+    }
+  };
+
+  // Handle edit product
+  const handleEditProduct = (product: Product) => {
+    setEditingProduct(product);
+    setIsModalOpen(true);
+  };
+
   // Filter products based on selections
   const filteredProducts = useMemo(() => {
     const selectedCategoryId = selectedCategory === 'ALL' ? 'ALL' : getCategoryIdFromName(selectedCategory);
     
-    return (products || [])?.filter((product) => {
+    console.log('=== FILTERING ===');
+    console.log('selectedFamily:', selectedFamily);
+    console.log('selectedCategory:', selectedCategory);
+    console.log('selectedCategoryId:', selectedCategoryId);
+    console.log('allCategories:', allCategories);
+    console.log('First product category:', products[0]?.category);
+    
+    const result = (products || [])?.filter((product) => {
       const matchesFamily = selectedFamily === 'ALL' || product?.family === selectedFamily;
       const matchesCategory = selectedCategoryId === 'ALL' || product?.category === selectedCategoryId;
       const matchesSearch = searchQuery === '' || 
@@ -91,13 +161,26 @@ export default function ProductCatalogInteractive() {
       
       return matchesFamily && matchesCategory && matchesSearch && matchesPrice;
     });
+    
+    console.log('Filtered results:', result.length);
+    return result;
   }, [products, selectedFamily, selectedCategory, searchQuery, priceRange, allCategories]);
 
   // Pagination
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
   const paginatedProducts = useMemo(() => {
     const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
-    return filteredProducts.slice(startIdx, startIdx + ITEMS_PER_PAGE);
+    const paginated = filteredProducts.slice(startIdx, startIdx + ITEMS_PER_PAGE);
+    
+    // Double-check for duplicates before rendering
+    const seen = new Set<string>();
+    return paginated.filter(product => {
+      if (seen.has(product.id)) {
+        return false;
+      }
+      seen.add(product.id);
+      return true;
+    });
   }, [filteredProducts, currentPage]);
 
   // Reset to page 1 when filters change
@@ -133,7 +216,7 @@ export default function ProductCatalogInteractive() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pt-20">
       {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse"></div>
@@ -142,10 +225,22 @@ export default function ProductCatalogInteractive() {
       <div className="relative">
         {/* Compact Header */}
         <div className="bg-gradient-to-r from-accent/10 via-primary/5 to-warning/10 border-b border-border py-6 px-4 lg:px-8">
-          <div className="max-w-7xl mx-auto">
-            <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground flex-1">
               Catalogue Produits
             </h1>
+            {isAdmin && (
+              <button
+                onClick={() => {
+                  setEditingProduct(null);
+                  setIsModalOpen(true);
+                }}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-green-600 hover:bg-green-700 text-white font-cta text-sm font-semibold transition-all duration-200 shadow-lg whitespace-nowrap"
+              >
+                <Icon name="PlusIcon" size={18} />
+                Ajouter
+              </button>
+            )}
           </div>
         </div>
         
@@ -166,7 +261,12 @@ export default function ProductCatalogInteractive() {
           <div className="max-w-7xl mx-auto">
             {paginatedProducts?.length > 0 ? (
               <>
-                <ProductGrid products={paginatedProducts} />
+                <ProductGrid 
+                  products={paginatedProducts}
+                  isAdmin={isAdmin}
+                  onEdit={handleEditProduct}
+                  onDelete={handleDeleteProduct}
+                />
 
                 {/* Beautiful Pagination */}
                 {totalPages > 1 && (
@@ -248,6 +348,19 @@ export default function ProductCatalogInteractive() {
           </div>
         </main>
       </div>
+
+      {/* Product Modal */}
+      <ProductModal
+        isOpen={isModalOpen}
+        product={editingProduct || undefined}
+        families={allFamilies}
+        categories={allCategories}
+        onClose={() => {
+          setIsModalOpen(false);
+          setEditingProduct(null);
+        }}
+        onSave={handleSaveProduct}
+      />
     </div>
   );
 }

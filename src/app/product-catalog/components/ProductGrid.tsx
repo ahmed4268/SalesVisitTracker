@@ -6,30 +6,31 @@ import { Product } from '../types';
 
 interface ProductGridProps {
   products: Product[];
+  isAdmin?: boolean;
+  onEdit?: (product: Product) => void;
+  onDelete?: (product: Product) => void;
 }
 
-export default function ProductGrid({ products }: ProductGridProps) {
-  const [visibleProducts, setVisibleProducts] = useState<Product[]>([]);
-
+export default function ProductGrid({ products, isAdmin, onEdit, onDelete }: ProductGridProps) {
   useEffect(() => {
-    // Stagger animation: show products with delay
-    setVisibleProducts([]);
-    products.forEach((product, index) => {
-      setTimeout(() => {
-        setVisibleProducts((prev) => [...prev, product]);
-      }, index * 50); // 50ms stagger delay
-    });
+    // Cleanup timeouts on unmount or when products change
+    return () => {};
   }, [products]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
-      {visibleProducts.map((product, index) => (
+      {products.map((product, index) => (
         <div
           key={product.id}
           className="animate-fade-in"
           style={{ animationDelay: `${index * 50}ms` }}
         >
-          <ProductCard product={product} />
+          <ProductCard 
+            product={product} 
+            isAdmin={isAdmin}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
         </div>
       ))}
     </div>
