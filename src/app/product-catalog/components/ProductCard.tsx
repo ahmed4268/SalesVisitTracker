@@ -14,123 +14,122 @@ interface ProductCardProps {
 export default function ProductCard({ product, isAdmin, onEdit, onDelete }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
-  const familyColors = {
-    SERRURES: 'from-accent to-success',
-    READER: 'from-secondary to-violet-vibrant',
-    ETIQUETTES: 'from-warning to-cta-orange',
+  // Vitality & Professionalism: Slightly richer backgrounds but still subtle
+  const familyBgStyles: Record<string, string> = {
+    SERRURES: 'bg-gradient-to-b from-blue-50/50 to-white', // Softer vertical gradient
+    READER: 'bg-gradient-to-b from-purple-50/50 to-white',
+    ETIQUETTES: 'bg-gradient-to-b from-emerald-50/50 to-white',
   };
 
-  const familyBadgeColors = {
-    SERRURES: 'bg-accent/10 text-accent border-accent/20',
-    READER: 'bg-secondary/10 text-secondary border-secondary/20',
-    ETIQUETTES: 'bg-warning/10 text-warning border-warning/20',
+  const familyHoverBorder: Record<string, string> = {
+    SERRURES: 'group-hover:border-blue-200',
+    READER: 'group-hover:border-purple-200',
+    ETIQUETTES: 'group-hover:border-emerald-200',
   };
 
-  const handleAddToCart = () => {
-    // Animation success
-    alert(`${product.name} ajouté au panier!`);
+  const familyTextColors: Record<string, string> = {
+    SERRURES: 'text-blue-600 bg-blue-50 border-blue-100',
+    READER: 'text-purple-600 bg-purple-50 border-purple-100',
+    ETIQUETTES: 'text-emerald-600 bg-emerald-50 border-emerald-100',
   };
 
   return (
     <div
-      className="group bg-card rounded-2xl overflow-hidden shadow-elevated border border-border hover:shadow-2xl hover:border-accent/30 transition-all duration-500 transform hover:-translate-y-2 cursor-pointer"
+      className={`group relative flex flex-col bg-white rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border border-gray-100 ${
+        familyHoverBorder[product.family] || 'group-hover:border-gray-200'
+      }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Image Container */}
-      <div className="relative h-48 bg-background overflow-hidden flex items-center justify-center">
+      {/* 1. Image Area - Clean & Balanced */}
+      <div className={`relative h-64 rounded-t-2xl overflow-hidden flex items-center justify-center p-6 ${
+        familyBgStyles[product.family] || 'bg-gray-50'
+      }`}>
+        
+        {/* Glow effect matching family */}
+        <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-b ${
+             product.family === 'READER' ? 'from-purple-50/30' : 
+             product.family === 'ETIQUETTES' ? 'from-emerald-50/30' : 
+             'from-blue-50/30'
+        } to-transparent`} />
+
         <img
           src={product.image}
           alt={product.alt}
-          className={`max-w-full max-h-full object-contain transition-transform duration-500 ${
+          className={`relative z-10 w-full h-full object-contain transition-transform duration-500 ease-out ${
             isHovered ? 'scale-105' : 'scale-100'
           }`}
         />
-        
-        {/* Badges */}
-        <div className="absolute top-3 left-3 flex flex-col gap-2">
-          <span className={`px-3 py-1 rounded-full text-xs font-cta font-semibold border ${
-            familyBadgeColors[product.family]
-          }`}>
-            {product.family}
-          </span>
-          {product.badge && (
-            <span className="px-3 py-1 rounded-full text-xs font-cta font-semibold bg-warning/90 text-white border border-warning">
-              {product.badge}
+
+        {/* Floating Top Bar */}
+        <div className="absolute top-3 left-3 right-3 flex justify-between items-start z-20">
+            {/* Family Tag - Clean Pill */}
+            <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold tracking-wide uppercase border ${
+                familyTextColors[product.family] || 'text-gray-500 bg-gray-50 border-gray-200'
+            }`}>
+                {product.family}
             </span>
-          )}
-        </div>
 
-        {/* Stock Indicator */}
-        <div className="absolute top-3 right-3">
-          <div className={`px-3 py-1.5 rounded-full text-xs font-cta font-bold ${
-            product.inStock 
-              ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white shadow-lg shadow-emerald-500/50 border border-emerald-300' 
-              : 'bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-lg shadow-orange-500/50 border border-orange-300'
-          }`}>
-            {product.inStock ? '✓ En stock' : 'Sur commande'}
-          </div>
+            {/* Stock Indicator */}
+            <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/90 backdrop-blur-sm border border-gray-100 shadow-sm`}>
+                <div className={`w-1.5 h-1.5 rounded-full ${product.inStock ? 'bg-emerald-500' : 'bg-amber-400'}`} />
+                <span className="text-[10px] font-medium text-gray-600">
+                  {product.inStock ? 'Stock' : 'Cmde'}
+                </span>
+            </div>
         </div>
-
-        {/* Glow Effect on Hover */}
-        {isHovered && (
-          <div className="absolute inset-0 bg-gradient-to-t from-accent/20 via-transparent to-transparent pointer-events-none"></div>
-        )}
       </div>
 
-      {/* Content */}
-      <div className="p-4">
-        {/* Product Name */}
-        <h3 className="text-base font-display font-bold text-foreground mb-2 line-clamp-2 min-h-[2.5rem] text-center">
-          {product.name}
-        </h3>
-
-        {/* RFID Frequency and Reference */}
-        <div className="flex items-center justify-center gap-2 mb-3">
-          <div className={`px-2.5 py-1 rounded-lg bg-gradient-to-r ${
-            familyColors[product.family]
-          } bg-opacity-10 border border-accent/20 flex items-center gap-1.5`}>
-            <Icon name="SignalIcon" size={14} className="text-accent" />
-            <span className="text-xs font-cta font-semibold text-foreground">
-              {product.frequency}
-            </span>
-          </div>
-          <span className="text-xs font-mono text-muted-foreground">
-            {product.reference}
-          </span>
+      {/* 2. Content Area */}
+      <div className="p-4 flex-1 flex flex-col">
+        <div className="mb-2">
+            <div className="flex items-center justify-between mb-1">
+                <p className="text-[10px] font-mono text-gray-400">{product.reference}</p>
+                 {product.badge && (
+                    <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-1.5 rounded">
+                        {product.badge}
+                    </span>
+                )}
+            </div>
+            
+            <h3 className="text-sm font-semibold text-gray-800 leading-snug group-hover:text-blue-600 transition-colors line-clamp-2 min-h-[2.5rem]">
+                {product.name}
+            </h3>
         </div>
 
-        {/* Price */}
-        <div className="mb-4 text-center">
-          <div className="flex items-baseline justify-center gap-1">
-            <span className="text-lg font-display font-bold text-foreground">
-              {product.priceTTC.toFixed(2)}
-            </span>
-            <span className="text-sm font-cta font-semibold text-muted-foreground">
-              DT
-            </span>
-          </div>
-        </div>
+        {/* Footer Info */}
+        <div className="mt-auto pt-3 border-t border-gray-50 flex items-center justify-between">
+             <div className="flex items-baseline gap-1">
+                <span className="text-base font-bold text-gray-900">
+                    {product.priceTTC.toLocaleString('fr-FR', { minimumFractionDigits: 0 })}
+                </span>
+                <span className="text-[10px] font-medium text-gray-400">DT</span>
+             </div>
 
-        {/* Admin Actions */}
-        {isAdmin && (
-          <div className="flex gap-2 pt-3 border-t border-border">
-            <button
-              onClick={() => onEdit?.(product)}
-              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-blue-100 hover:bg-blue-200 text-blue-700 font-cta text-xs transition-colors"
-            >
-              <Icon name="PencilIcon" size={14} />
-              Éditer
-            </button>
-            <button
-              onClick={() => onDelete?.(product)}
-              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-red-100 hover:bg-red-200 text-red-700 font-cta text-xs transition-colors"
-            >
-              <Icon name="TrashIcon" size={14} />
-              Supprimer
-            </button>
-          </div>
-        )}
+            {/* Actions or Frequency */}
+            <div className="flex items-center gap-2">
+                {isAdmin ? (
+                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        <button
+                            onClick={(e) => { e.stopPropagation(); onEdit?.(product); }}
+                            className="p-1.5 rounded-md text-gray-400 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+                        >
+                            <Icon name="PencilIcon" size={16} />
+                        </button>
+                        <button
+                            onClick={(e) => { e.stopPropagation(); onDelete?.(product); }}
+                            className="p-1.5 rounded-md text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        >
+                            <Icon name="TrashIcon" size={16} />
+                        </button>
+                    </div>
+                ) : (
+                    <div className="px-2 py-0.5 bg-gray-50 text-gray-500 rounded text-[10px] font-medium">
+                        {product.frequency || '-'}
+                    </div>
+                )}
+            </div>
+        </div>
       </div>
     </div>
   );

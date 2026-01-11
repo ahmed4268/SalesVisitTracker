@@ -248,55 +248,71 @@ export default function ProductCatalogInteractive() {
   }
 
   return (
-    <div className="min-h-screen bg-background pt-20">
-      {/* Animated Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+    <div className="min-h-screen bg-[#FDFDFD] pt-20 selection:bg-blue-100 selection:text-blue-900">
+      {/* Background - Professional Dot Grid */}
+      <div className="fixed inset-0 z-0 pointer-events-none opacity-[0.4]" 
+           style={{ 
+             backgroundImage: 'radial-gradient(#CBD5E1 1px, transparent 1px)', 
+             backgroundSize: '32px 32px' 
+           }}>
       </div>
-      <div className="relative">
-        {/* Compact Header */}
-        <div className="bg-gradient-to-r from-accent/10 via-primary/5 to-warning/10 border-b border-border py-6 px-4 lg:px-8">
-          <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-            <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground flex-1">
-              Catalogue Produits
-            </h1>
-            <div className="flex items-center gap-3">
-              {/* Filter Button */}
-              <button
-                onClick={() => setIsFilterPanelOpen(true)}
-                className="relative inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-cta text-sm font-semibold transition-all duration-200 shadow-lg whitespace-nowrap group"
-              >
-                <Icon name="AdjustmentsHorizontalIcon" size={18} />
-                <span>Filtres</span>
-                {(filters.families.length > 0 ||
-                  filters.categories.length > 0 ||
-                  filters.searchQuery ||
-                  filters.priceRange[0] !== 0 ||
-                  filters.priceRange[1] !== 10000 ||
-                  filters.inStock !== null) && (
-                  <span className="absolute -top-2 -right-2 inline-flex items-center justify-center w-5 h-5 rounded-full bg-red-500 text-white text-xs font-bold animate-pulse">
-                    {filters.families.length +
-                      filters.categories.length +
-                      (filters.searchQuery ? 1 : 0) +
-                      (filters.priceRange[0] !== 0 || filters.priceRange[1] !== 10000 ? 1 : 0) +
-                      (filters.inStock !== null ? 1 : 0)}
-                  </span>
+      
+      {/* Ambient Glows - Subtle and Premium */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute -top-[20%] left-[10%] w-[50vw] h-[50vw] bg-blue-100/40 rounded-full blur-[120px] mix-blend-multiply opacity-70"></div>
+        <div className="absolute top-[20%] -right-[10%] w-[40vw] h-[40vw] bg-purple-100/40 rounded-full blur-[120px] mix-blend-multiply opacity-70"></div>
+      </div>
+
+      <div className="relative z-10">
+        {/* Header - Editorial Style */}
+        <div className="pt-12 pb-16 px-4 lg:px-8 border-b border-gray-100/50 bg-white/50 backdrop-blur-sm sticky top-0 z-40 transition-all duration-300">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div className="space-y-2">
+                 <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                    <span className="text-xs font-mono font-medium text-gray-500 tracking-widest uppercase">Catalogue 2026</span>
+                 </div>
+                <h1 className="text-4xl md:text-6xl font-display font-medium text-gray-900 tracking-tight">
+                  Nos <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 font-bold">Produits</span>
+                </h1>
+                <p className="max-w-xl text-lg text-gray-500 font-light leading-relaxed">
+                  Découvrez nos solutions RFID haute performance, conçues pour l'excellence et la fiabilité industrielle.
+                </p>
+              </div>
+
+              <div className="flex items-stretch gap-3">
+                {/* Filter Button - Pill Shaped */}
+                <button
+                  onClick={() => setIsFilterPanelOpen(true)}
+                  className="group relative inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 text-gray-700 hover:text-gray-900"
+                >
+                  <Icon name="AdjustmentsHorizontalIcon" size={20} className="text-gray-400 group-hover:text-blue-500 transition-colors" />
+                  <span className="font-medium">Filtres</span>
+                  {(filters.families.length > 0 ||
+                    filters.categories.length > 0 ||
+                    filters.searchQuery ||
+                    filters.priceRange[0] !== 0 ||
+                    filters.priceRange[1] !== 10000 ||
+                    filters.inStock !== null) && (
+                    <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-blue-500 border-2 border-white"></span>
+                  )}
+                </button>
+                
+                {isAdmin && (
+                  <button
+                    onClick={() => {
+                      setEditingProduct(null);
+                      setIsModalOpen(true);
+                    }}
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gray-900 text-white hover:bg-black hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl shadow-gray-200"
+                  >
+                    <Icon name="PlusIcon" size={20} />
+                    <span className="font-medium">Nouveau</span>
+                  </button>
                 )}
-              </button>
+              </div>
             </div>
-            {isAdmin && (
-              <button
-                onClick={() => {
-                  setEditingProduct(null);
-                  setIsModalOpen(true);
-                }}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-green-600 hover:bg-green-700 text-white font-cta text-sm font-semibold transition-all duration-200 shadow-lg whitespace-nowrap"
-              >
-                <Icon name="PlusIcon" size={18} />
-                Ajouter
-              </button>
-            )}
           </div>
         </div>
 
