@@ -7,12 +7,15 @@ let categoryCache: Record<string, string> = {};
  * Transforme les données de l'API Supabase vers le format du design
  */
 export function transformApiProductToDesign(apiProduct: any): Product {
+  const familyName = getFamilyName(apiProduct.famille_id);
+  console.log(`Produit: ${apiProduct.designation}, famille_id: ${apiProduct.famille_id}, famille mappée: ${familyName}`);
+  
   return {
     id: apiProduct.id,
     name: apiProduct.designation,
     reference: apiProduct.reference || '',
     description: apiProduct.description || '',
-    family: getFamilyName(apiProduct.famille_id) as ProductFamily,
+    family: familyName as ProductFamily,
     category: apiProduct.categorie_id || 'Non catégorisé', // Store raw ID, don't transform
     frequency: apiProduct.frequence || 'Standard',
     priceTTC: apiProduct.prix_ttc || 0,
@@ -31,14 +34,16 @@ export function transformApiProductToDesign(apiProduct: any): Product {
 function getFamilyName(familleId: string | undefined): ProductFamily {
   if (!familleId) return 'SERRURES';
   
-  // Map direct si les IDs correspondent
+  // Map des UUID réels vers les noms de famille
   const familyMap: Record<string, ProductFamily> = {
+    // UUID de la base de données
+    '16d408ce-a7f2-4792-8e81-b193d114fcb6': 'READER',
+    'b67b741c-8f88-4522-8f98-f34305cf5e48': 'SERRURES',
+    'baa127db-5091-43ab-a176-5a1634a75590': 'ETIQUETTES',
+    // Fallbacks si les noms sont déjà présents
     'SERRURES': 'SERRURES',
     'READER': 'READER',
     'ETIQUETTES': 'ETIQUETTES',
-    'famille-serrures': 'SERRURES',
-    'famille-reader': 'READER',
-    'famille-etiquettes': 'ETIQUETTES',
   };
   
   return familyMap[familleId] || 'SERRURES';

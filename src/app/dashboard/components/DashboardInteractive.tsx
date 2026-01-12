@@ -277,6 +277,29 @@ export default function DashboardInteractive() {
         }));
         
         setCommercialList(commercialOptions);
+        
+        // Récupérer le compte total de visites pour chaque commercial
+        const visitCountByCommercial: Record<string, number> = {};
+        
+        await Promise.all(
+          data.map(async (member) => {
+            try {
+              const params = new URLSearchParams({
+                commercial_id: member.id,
+                pageSize: '1' // On veut juste le total, pas les données
+              });
+              const response = await fetch(`/api/visites?${params.toString()}`);
+              if (response.ok) {
+                const result = await response.json();
+                visitCountByCommercial[member.id] = result?.pagination?.total ?? 0;
+              }
+            } catch (error) {
+              console.error(`Erreur lors du comptage des visites pour ${member.id}:`, error);
+              visitCountByCommercial[member.id] = 0;
+            }
+          })
+        );
+        
         setTeamMembersState(
           data.map((member) => ({
             id: member.id as unknown as number,
@@ -284,7 +307,7 @@ export default function DashboardInteractive() {
             role: member.role || 'commercial',
             avatar: DEFAULT_AVATAR_SRC,
             avatarAlt: DEFAULT_AVATAR_ALT,
-            visitsToday: 0,
+            visitsToday: visitCountByCommercial[member.id] || 0,
             status: 'active' as const,
           }))
         );
