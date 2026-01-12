@@ -401,7 +401,7 @@ export default function DashboardInteractive() {
       <div className="relative">
         {/* Main Content */}
         <main className="pt-24 pb-12 px-4 lg:px-8">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-[1920px] mx-auto">
             {/* Header Section */}
             <div className="mb-8">
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -490,12 +490,13 @@ export default function DashboardInteractive() {
                 </div>
 
                 <div className="overflow-x-auto border border-border rounded-xl">
-                  <table className="min-w-full text-xs md:text-sm">
+                  <table className="w-full text-xs md:text-sm">
                     <thead className="bg-muted/60">
                       <tr className="text-left text-[11px] md:text-xs text-muted-foreground font-cta">
                         <th className="px-3 py-2.5 md:px-4">Date</th>
                         <th className="px-3 py-2.5 md:px-4">Entreprise</th>
                         <th className="px-3 py-2.5 md:px-4">Contact</th>
+                        <th className="px-3 py-2.5 md:px-4 hidden md:table-cell">Objet</th>
                         <th className="px-3 py-2.5 md:px-4 hidden lg:table-cell">Commercial</th>
                         <th className="px-3 py-2.5 md:px-4 hidden md:table-cell">Ville</th>
                         <th className="px-3 py-2.5 md:px-4">Statut</th>
@@ -566,8 +567,13 @@ export default function DashboardInteractive() {
                                     {visite.fonction_poste}
                                   </p>
                                 )}
-                              </td>
-                              <td className="px-3 py-3 md:px-4 text-[11px] md:text-xs text-muted-foreground hidden lg:table-cell">
+                              </td>                              <td className="px-3 py-3 md:px-4 max-w-[200px] hidden md:table-cell">
+                                <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100 max-h-12">
+                                  <p className="text-xs text-foreground whitespace-nowrap pr-2">
+                                    {visite.objet_visite || '—'}
+                                  </p>
+                                </div>
+                              </td>                              <td className="px-3 py-3 md:px-4 text-[11px] md:text-xs text-muted-foreground hidden lg:table-cell">
                                 {visite.commercial_name || '—'}
                               </td>
                               <td className="px-3 py-3 md:px-4 text-xs text-muted-foreground hidden md:table-cell">
