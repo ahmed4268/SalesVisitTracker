@@ -603,9 +603,9 @@ export default function DashboardInteractive() {
                 </div>
 
                 <div className="overflow-x-auto border border-border rounded-xl">
-                  <table className="w-full text-xs">
+                  <table className="w-full text-xs xl:text-sm">
                     <thead className="bg-gradient-to-r from-slate-50 to-slate-100 border-b border-slate-200">
-                      <tr className="text-left text-[10px] uppercase tracking-wider text-slate-600 font-semibold">
+                      <tr className="text-left text-[10px] xl:text-xs uppercase tracking-wider text-slate-600 font-semibold">
                         <th className="px-2 py-3 w-[90px]">Date</th>
                         <th className="px-2 py-3 min-w-[140px]">Entreprise</th>
                         <th className="px-2 py-3 min-w-[120px]">Contact</th>
@@ -658,21 +658,21 @@ export default function DashboardInteractive() {
                               className="border-t border-slate-100 hover:bg-blue-50/30 transition-all"
                             >
                               <td className="px-2 py-2.5 whitespace-nowrap">
-                                <span className="text-[11px] font-medium text-slate-700">
+                                <span className="text-[11px] xl:text-xs font-medium text-slate-700">
                                   {formatVisitDate(visite.date_visite)}
                                 </span>
                               </td>
                               <td className="px-2 py-2.5">
-                                <p className="text-[11px] font-bold text-slate-900 truncate max-w-[140px]">
+                                <p className="text-[11px] xl:text-sm font-bold text-slate-900 truncate max-w-[140px] xl:max-w-[180px]">
                                   {visite.entreprise}
                                 </p>
                               </td>
                               <td className="px-2 py-2.5">
-                                <p className="text-[11px] text-slate-700 truncate max-w-[120px]">
+                                <p className="text-[11px] xl:text-xs text-slate-700 truncate max-w-[120px] xl:max-w-[160px]">
                                   {visite.personne_rencontree}
                                 </p>
                                 {visite.fonction_poste && (
-                                  <p className="text-[9px] text-slate-500 truncate max-w-[120px]">
+                                  <p className="text-[9px] xl:text-[10px] text-slate-500 truncate max-w-[120px] xl:max-w-[160px]">
                                     {visite.fonction_poste}
                                   </p>
                                 )}
@@ -680,15 +680,15 @@ export default function DashboardInteractive() {
                                 {visite.objet_visite ? (
                                   <div className="group relative">
                                     <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-blue-50 border border-blue-100">
-                                      <Icon name="DocumentTextIcon" size={12} className="text-blue-400 flex-shrink-0" />
-                                      <p className="text-[10px] text-slate-700 truncate max-w-[140px]">
+                                      <Icon name="DocumentTextIcon" size={12} className="text-blue-400 flex-shrink-0 xl:w-4 xl:h-4" />
+                                      <p className="text-[10px] xl:text-xs text-slate-700 truncate max-w-[140px] xl:max-w-[180px]">
                                         {visite.objet_visite}
                                       </p>
                                     </div>
                                     {/* Tooltip on hover */}
                                     {visite.objet_visite.length > 30 && (
                                       <div className="absolute left-0 top-full mt-1 z-50 hidden group-hover:block">
-                                        <div className="bg-slate-900 text-white text-[10px] rounded-lg px-2 py-1.5 shadow-xl max-w-[200px]">
+                                        <div className="bg-slate-900 text-white text-[10px] xl:text-xs rounded-lg px-2 py-1.5 shadow-xl max-w-[200px] xl:max-w-[280px]">
                                           <p className="leading-relaxed">{visite.objet_visite}</p>
                                           <div className="absolute -top-1 left-4 w-2 h-2 bg-slate-900 transform rotate-45"></div>
                                         </div>
@@ -698,13 +698,13 @@ export default function DashboardInteractive() {
                                 ) : (
                                   <span className="text-[10px] text-slate-400 italic">—</span>
                                 )}
-                              </td>                              <td className="px-2 py-2.5 text-[10px] text-slate-600 hidden lg:table-cell truncate">
+                              </td>                              <td className="px-2 py-2.5 text-[10px] xl:text-xs text-slate-600 hidden lg:table-cell truncate">
                                 {visite.commercial_name || '—'}
                               </td>
-                              <td className="px-2 py-2.5 text-[10px] text-slate-600 hidden md:table-cell">
+                              <td className="px-2 py-2.5 text-[10px] xl:text-xs text-slate-600 hidden md:table-cell">
                                 {visite.ville || '—'}
                               </td>
-                              <td className="px-2 py-2.5 text-[10px] text-slate-600 hidden xl:table-cell">
+                              <td className="px-2 py-2.5 text-[10px] xl:text-xs text-slate-600 hidden xl:table-cell">
                                 {visite.zone || '—'}
                               </td>
                               <td className="px-2 py-2.5">
@@ -712,7 +712,7 @@ export default function DashboardInteractive() {
                                   <div className="relative">
                                     <button
                                       onClick={() => setStatusMenuOpen(statusMenuOpen === visite.id ? null : visite.id)}
-                                      className={`group inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[10px] font-semibold transition-all duration-200 min-w-[80px] justify-center ${
+                                      className={`group inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[10px] xl:text-xs font-semibold transition-all duration-200 min-w-[80px] xl:min-w-[90px] justify-center ${
                                         visite.statut_visite === 'a_faire'
                                           ? 'bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100 hover:border-amber-300'
                                           : visite.statut_visite === 'en_cours'
@@ -778,7 +778,7 @@ export default function DashboardInteractive() {
                                   <div className="relative">
                                     <button
                                       onClick={() => setResultMenuOpen(resultMenuOpen === visite.id ? null : visite.id)}
-                                      className={`group inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[10px] font-semibold transition-all duration-200 min-w-[85px] justify-center ${
+                                      className={`group inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[10px] xl:text-xs font-semibold transition-all duration-200 min-w-[85px] xl:min-w-[95px] justify-center ${
                                         visite.statut_action === 'en_attente'
                                           ? 'bg-slate-50 text-slate-700 border border-slate-200 hover:bg-slate-100 hover:border-slate-300'
                                           : visite.statut_action === 'accepte'
@@ -839,7 +839,7 @@ export default function DashboardInteractive() {
                                   </span>
                                 )}
                               </td>
-                              <td className="px-2 py-2.5 text-[10px] font-semibold text-slate-700 hidden lg:table-cell whitespace-nowrap">
+                              <td className="px-2 py-2.5 text-[10px] xl:text-xs font-semibold text-slate-700 hidden lg:table-cell whitespace-nowrap">
                                 {canViewSensitive(visite)
                                   ? typeof visite.montant === 'number'
                                     ? `${visite.montant.toLocaleString('fr-FR')} DT`
@@ -851,7 +851,7 @@ export default function DashboardInteractive() {
                               <td className="px-2 py-2.5 hidden lg:table-cell">
                                 {canViewSensitive(visite)
                                   ? typeof visite.probabilite === 'number'
-                                    ? <span className="inline-flex items-center justify-center px-2 py-1 rounded-full bg-blue-100 text-blue-700 text-[10px] font-bold">{visite.probabilite}%</span>
+                                    ? <span className="inline-flex items-center justify-center px-2 py-1 rounded-full bg-blue-100 text-blue-700 text-[10px] xl:text-xs font-bold">{visite.probabilite}%</span>
                                     : '—'
                                   : typeof visite.probabilite === 'number'
                                   ? '*****'
@@ -863,7 +863,7 @@ export default function DashboardInteractive() {
                                   <div className="relative group">
                                     <button
                                       type="button"
-                                      className="relative inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-200 hover:scale-105 hover:shadow-lg"
+                                      className="relative inline-flex items-center justify-center w-8 h-8 xl:w-9 xl:h-9 rounded-lg bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-200 hover:scale-105 hover:shadow-lg"
                                       onClick={() => {
                                         setRdvCardOpen(visite.id);
                                         setSelectedVisiteName(visite.entreprise);
@@ -871,7 +871,7 @@ export default function DashboardInteractive() {
                                       }}
                                       aria-label="Voir les rendez-vous"
                                     >
-                                      <Icon name="EyeIcon" size={14} />
+                                      <Icon name="EyeIcon" className="w-3.5 h-3.5 xl:w-4 xl:h-4" />
                                       {rdvCounts[visite.id] > 0 && (
                                         <span className="absolute -top-1 -right-1 inline-flex items-center justify-center min-w-[16px] h-4 px-1 text-[8px] font-bold text-white bg-red-500 rounded-full border-2 border-white shadow-sm">
                                           {rdvCounts[visite.id]}
@@ -890,13 +890,13 @@ export default function DashboardInteractive() {
                                       <div className="relative group">
                                         <button
                                           type="button"
-                                          className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-500 hover:text-white hover:border-slate-500 transition-all duration-200 hover:scale-105 hover:shadow-lg"
+                                          className="inline-flex items-center justify-center w-8 h-8 xl:w-9 xl:h-9 rounded-lg bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-500 hover:text-white hover:border-slate-500 transition-all duration-200 hover:scale-105 hover:shadow-lg"
                                           onClick={() => {
                                             router.push(`/visit-form?edit=${visite.id}`);
                                           }}
                                           aria-label="Modifier la visite"
                                         >
-                                          <Icon name="PencilSquareIcon" size={14} />
+                                          <Icon name="PencilSquareIcon" className="w-3.5 h-3.5 xl:w-4 xl:h-4" />
                                         </button>
                                         {/* Tooltip */}
                                         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 bg-slate-900 text-white text-[9px] rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
@@ -908,7 +908,7 @@ export default function DashboardInteractive() {
                                       <div className="relative group">
                                         <button
                                           type="button"
-                                          className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-red-50 text-red-600 border border-red-200 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-200 hover:scale-105 hover:shadow-lg"
+                                          className="inline-flex items-center justify-center w-8 h-8 xl:w-9 xl:h-9 rounded-lg bg-red-50 text-red-600 border border-red-200 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-200 hover:scale-105 hover:shadow-lg"
                                           onClick={async () => {
                                             if (!confirm('Êtes-vous sûr de vouloir supprimer cette visite ?')) {
                                               return;
@@ -930,7 +930,7 @@ export default function DashboardInteractive() {
                                           }}
                                           aria-label="Supprimer la visite"
                                         >
-                                          <Icon name="TrashIcon" size={14} />
+                                          <Icon name="TrashIcon" className="w-3.5 h-3.5 xl:w-4 xl:h-4" />
                                         </button>
                                         {/* Tooltip */}
                                         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 bg-slate-900 text-white text-[9px] rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
@@ -1030,19 +1030,38 @@ export default function DashboardInteractive() {
 
                 {/* Widget: Équipe (Grille Compacte Scrollable) */}
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm h-[420px] flex flex-col overflow-hidden">
-                  <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-                    <div className="flex items-center gap-2">
-                       <div className="p-1.5 bg-emerald-50 text-emerald-600 rounded-lg">
-                        <Icon name="UsersIcon" size={18} />
+                  <div className="px-5 py-4 border-b border-slate-100 bg-slate-50/50">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <div className="p-1.5 bg-emerald-50 text-emerald-600 rounded-lg">
+                          <Icon name="UsersIcon" size={18} />
+                        </div>
+                        <h2 className="text-base font-bold text-slate-800">Mon Équipe</h2>
+                        <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[10px] font-bold border border-slate-200">
+                          {(teamMembersState ?? teamMembers).filter(m => m.role === 'commercial' || m.role === 'Commercial').length}
+                        </span>
                       </div>
-                      <h2 className="text-base font-bold text-slate-800">Mon Équipe</h2>
-                      <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[10px] font-bold border border-slate-200">
-                        {teamMembersState?.length || teamMembers.length}
-                      </span>
+                      <button className="text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline">
+                        Voir tout
+                      </button>
                     </div>
-                    <button className="text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline">
-                      Voir tout
-                    </button>
+                    
+                    {/* Légende des indicateurs */}
+                    <div className="flex items-center gap-4 px-3 py-2 bg-white rounded-lg border border-slate-200">
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5">
+                          <div className="w-3 h-3 rounded-full bg-gradient-to-r from-blue-400 to-blue-500"></div>
+                          <span className="text-[10px] font-medium text-slate-600">Par semaine (24)</span>
+                        </div>
+                      </div>
+                      <div className="w-px h-3 bg-slate-300"></div>
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5">
+                          <div className="w-3 h-3 rounded-full bg-gradient-to-r from-purple-400 to-purple-500"></div>
+                          <span className="text-[10px] font-medium text-slate-600">Par mois (96)</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent bg-slate-50/30">
@@ -1060,8 +1079,8 @@ export default function DashboardInteractive() {
                         </div>
                       )}
                       
-                      {/* Carte Membre - Version Compacte via Grid */}
-                      {(!equipeLoading && !equipeError) && (teamMembersState ?? teamMembers).map((member) => (
+                      {/* Carte Membre - Version Compacte via Grid - Uniquement Commerciaux */}
+                      {(!equipeLoading && !equipeError) && (teamMembersState ?? teamMembers).filter(member => member.role === 'commercial' || member.role === 'Commercial').map((member) => (
                         <div key={member.id} className="h-full">
                            <TeamMemberCard {...member} />
                         </div>

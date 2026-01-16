@@ -75,9 +75,18 @@ export default function TeamMemberCard({
     }
   };
 
-  // Calculate progress based on a daily target (e.g., 8 visits)
-  const dailyTarget = 8;
-  const progress = Math.min((visitsToday / dailyTarget) * 100, 100);
+  // Objectifs : 24 visites/semaine et 96 visites/mois
+  const weeklyTarget = 24;
+  const monthlyTarget = 96;
+  
+  // Pour l'instant, on utilise visitsToday comme nombre de visites du mois
+  // (le backend pourrait être amélioré pour fournir visitsThisWeek et visitsThisMonth)
+  const visitsThisMonth = visitsToday;
+  // Estimation : on suppose qu'on est à environ 1/4 du mois
+  const visitsThisWeek = Math.floor(visitsToday / 4);
+  
+  const weeklyProgress = Math.min((visitsThisWeek / weeklyTarget) * 100, 100);
+  const monthlyProgress = Math.min((visitsThisMonth / monthlyTarget) * 100, 100);
 
   return (
     <>
@@ -116,24 +125,56 @@ export default function TeamMemberCard({
             </span>
           </div>
 
-          {/* Progress Section */}
-          <div className="space-y-1.5">
-            <div className="flex items-center justify-between text-[10px] font-medium text-slate-400">
-               <span className="flex items-center gap-1.5">
-                 <Icon name="BriefcaseIcon" size={12} />
-                 {visitsToday} visites
-               </span>
-               <span className={visitsToday >= dailyTarget ? 'text-emerald-600' : ''}>
-                 {Math.round(progress)}%
-               </span>
+          {/* Progress Section - Double Indicators (Seulement pour commerciaux) */}
+          {(role === 'commercial' || role === 'Commercial') && (
+          <div className="space-y-2">
+            {/* Indicateur Hebdomadaire */}
+            <div className="space-y-1">
+              <div className="flex items-center justify-between text-[9px] font-medium text-slate-500">
+                <span className="flex items-center gap-1">
+                  <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-400 to-blue-500"></div>
+                  <span className="font-bold">{visitsThisWeek}/{weeklyTarget}</span>
+                </span>
+                <span className={`text-[10px] font-bold ${
+                  weeklyProgress >= 100 ? 'text-emerald-600' :
+                  weeklyProgress >= 75 ? 'text-blue-600' :
+                  weeklyProgress >= 50 ? 'text-amber-600' : 'text-slate-500'
+                }`}>
+                  {Math.round(weeklyProgress)}%
+                </span>
+              </div>
+              <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div 
+                  className="h-full rounded-full transition-all duration-1000 ease-out bg-gradient-to-r from-blue-400 to-blue-500"
+                  style={{ width: `${weeklyProgress}%` }}
+                ></div>
+              </div>
             </div>
-            <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
-               <div 
-                 className={`h-full rounded-full transition-all duration-1000 ease-out ${visitsToday >= dailyTarget ? 'bg-gradient-to-r from-emerald-400 to-emerald-500' : 'bg-gradient-to-r from-blue-400 to-indigo-500'}`}
-                 style={{ width: `${progress}%` }}
-               ></div>
+
+            {/* Indicateur Mensuel */}
+            <div className="space-y-1">
+              <div className="flex items-center justify-between text-[9px] font-medium text-slate-500">
+                <span className="flex items-center gap-1">
+                  <div className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-purple-500"></div>
+                  <span className="font-bold">{visitsThisMonth}/{monthlyTarget}</span>
+                </span>
+                <span className={`text-[10px] font-bold ${
+                  monthlyProgress >= 100 ? 'text-emerald-600' :
+                  monthlyProgress >= 75 ? 'text-purple-600' :
+                  monthlyProgress >= 50 ? 'text-amber-600' : 'text-slate-500'
+                }`}>
+                  {Math.round(monthlyProgress)}%
+                </span>
+              </div>
+              <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div 
+                  className="h-full rounded-full transition-all duration-1000 ease-out bg-gradient-to-r from-purple-400 to-purple-500"
+                  style={{ width: `${monthlyProgress}%` }}
+                ></div>
+              </div>
             </div>
           </div>
+          )}
         </div>
 
         {/* Action Button (Hidden until hover) */}
