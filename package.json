@@ -55,11 +55,13 @@
     "@supabase/supabase-js": "^2.89.0",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/typography": "^0.5.16",
+    "exceljs": "^4.4.0",
     "lucide-react": "^0.562.0",
     "next": "14.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "recharts": "^2.15.2"
+    "recharts": "^2.15.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

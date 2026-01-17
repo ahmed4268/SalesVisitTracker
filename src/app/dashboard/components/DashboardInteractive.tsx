@@ -106,6 +106,10 @@ export default function DashboardInteractive() {
   const [selectedVisiteName, setSelectedVisiteName] = useState<string>('');
   const [selectedVisiteData, setSelectedVisiteData] = useState<Visite | null>(null);
   const [rdvCounts, setRdvCounts] = useState<Record<string, number>>({});
+  
+  // État pour l'export Excel
+  const [showExportMenu, setShowExportMenu] = useState(false);
+  const [selectedConsultantForExport, setSelectedConsultantForExport] = useState<string>('all');
 
   useEffect(() => {
     setIsHydrated(true);
@@ -520,20 +524,167 @@ export default function DashboardInteractive() {
                     Vue d'ensemble de vos performances commerciales
                   </p>
                 </div>
-                <div className="flex items-center space-x-3">
-                  <select
-                    value={selectedPeriod}
-                    onChange={(e) => setSelectedPeriod(e.target.value)}
-                    className="px-4 py-2 rounded-xl bg-card border border-border text-foreground font-cta focus:outline-none focus:ring-2 focus:ring-primary transition-smooth"
-                  >
-                    <option value="week">Cette Semaine</option>
-                    <option value="month">Ce Mois</option>
-                    <option value="quarter">Ce Trimestre</option>
-                    <option value="year">Cette Année</option>
-                  </select>
-                  <button className="px-6 py-2 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-cta font-semibold hover:shadow-2xl transform hover:-translate-y-0.5 transition-all duration-300">
-                    Exporter
-                  </button>
+                
+                {/* Bouton Export Excel */}
+                <div className="flex items-center gap-3">
+                  {currentUserRole === 'commercial' && (
+                    <button 
+                      onClick={async () => {
+                        try {
+                          const response = await fetch('/api/visites/export');
+                          if (!response.ok) {
+                            const errorData = await response.json();
+                            error(errorData.error || 'Erreur lors de l\'export');
+                            return;
+                          }
+                          
+                          const blob = await response.blob();
+                          const url = window.URL.createObjectURL(blob);
+                          const a = document.createElement('a');
+                          a.href = url;
+                          
+                          const contentDisposition = response.headers.get('Content-Disposition');
+                          const fileNameMatch = contentDisposition?.match(/filename="(.+)"/);
+                          const fileName = fileNameMatch ? fileNameMatch[1] : 'visites_export.xlsx';
+                          
+                          a.download = fileName;
+                          document.body.appendChild(a);
+                          a.click();
+                          window.URL.revokeObjectURL(url);
+                          document.body.removeChild(a);
+                          
+                          success('Export Excel réussi !');
+                        } catch (err) {
+                          console.error('Erreur lors de l\'export:', err);
+                          error('Erreur lors de l\'export Excel');
+                        }
+                      }}
+                      className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-cta font-semibold hover:shadow-2xl transform hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2"
+                    >
+                      <Icon name="ArrowDownTrayIcon" size={18} />
+                      Exporter mes visites
+                    </button>
+                  )}
+                  
+                  {(currentUserRole === 'consultant' || currentUserRole === 'admin') && (
+                    <div className="relative">
+                      <button 
+                        onClick={() => setShowExportMenu(!showExportMenu)}
+                        className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-cta font-semibold hover:shadow-2xl transform hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2"
+                      >
+                        <Icon name="ArrowDownTrayIcon" size={18} />
+                        Exporter Excel
+                        <Icon name="ChevronDownIcon" size={16} />
+                      </button>
+                      
+                      {showExportMenu && (
+                        <>
+                          <div className="fixed inset-0 z-[90]" onClick={() => setShowExportMenu(false)} />
+                          <div className="absolute right-0 top-full mt-2 z-[91] w-72 bg-white rounded-xl shadow-2xl border border-slate-200 py-3 animate-fade-in">
+                            <div className="px-4 pb-2 border-b border-slate-100">
+                              <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Sélectionner un commercial</p>
+                            </div>
+                            
+                            <div className="py-2 max-h-64 overflow-y-auto">
+                              <button
+                                onClick={async () => {
+                                  setShowExportMenu(false);
+                                  try {
+                                    const response = await fetch('/api/visites/export?consultant_id=all');
+                                    if (!response.ok) {
+                                      const errorData = await response.json();
+                                      error(errorData.error || 'Erreur lors de l\'export');
+                                      return;
+                                    }
+                                    
+                                    const blob = await response.blob();
+                                    const url = window.URL.createObjectURL(blob);
+                                    const a = document.createElement('a');
+                                    a.href = url;
+                                    
+                                    const contentDisposition = response.headers.get('Content-Disposition');
+                                    const fileNameMatch = contentDisposition?.match(/filename="(.+)"/);
+                                    const fileName = fileNameMatch ? fileNameMatch[1] : 'visites_export.xlsx';
+                                    
+                                    a.download = fileName;
+                                    document.body.appendChild(a);
+                                    a.click();
+                                    window.URL.revokeObjectURL(url);
+                                    document.body.removeChild(a);
+                                    
+                                    success('Export Excel réussi !');
+                                  } catch (err) {
+                                    console.error('Erreur lors de l\'export:', err);
+                                    error('Erreur lors de l\'export Excel');
+                                  }
+                                }}
+                                className="w-full px-4 py-2.5 text-left text-sm hover:bg-emerald-50 transition-colors flex items-center gap-3 group"
+                              >
+                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center">
+                                  <Icon name="UsersIcon" size={16} className="text-white" />
+                                </div>
+                                <div className="flex-1">
+                                  <p className="font-semibold text-slate-800 group-hover:text-emerald-600">Tous les commerciaux</p>
+                                  <p className="text-xs text-slate-500">Exporter toutes les visites</p>
+                                </div>
+                              </button>
+                              
+                              <div className="my-2 border-t border-slate-100"></div>
+                              
+                              {commercialList.filter(c => {
+                                const member = (teamMembersState ?? []).find(m => String(m.id) === c.id);
+                                return member?.role === 'commercial' || member?.role === 'Commercial';
+                              }).map((commercial) => (
+                                <button
+                                  key={commercial.id}
+                                  onClick={async () => {
+                                    setShowExportMenu(false);
+                                    try {
+                                      const response = await fetch(`/api/visites/export?consultant_id=${commercial.id}`);
+                                      if (!response.ok) {
+                                        const errorData = await response.json();
+                                        error(errorData.error || 'Erreur lors de l\'export');
+                                        return;
+                                      }
+                                      
+                                      const blob = await response.blob();
+                                      const url = window.URL.createObjectURL(blob);
+                                      const a = document.createElement('a');
+                                      a.href = url;
+                                      
+                                      const contentDisposition = response.headers.get('Content-Disposition');
+                                      const fileNameMatch = contentDisposition?.match(/filename="(.+)"/);
+                                      const fileName = fileNameMatch ? fileNameMatch[1] : 'visites_export.xlsx';
+                                      
+                                      a.download = fileName;
+                                      document.body.appendChild(a);
+                                      a.click();
+                                      window.URL.revokeObjectURL(url);
+                                      document.body.removeChild(a);
+                                      
+                                      success(`Export Excel réussi pour ${commercial.name} !`);
+                                    } catch (err) {
+                                      console.error('Erreur lors de l\'export:', err);
+                                      error('Erreur lors de l\'export Excel');
+                                    }
+                                  }}
+                                  className="w-full px-4 py-2.5 text-left text-sm hover:bg-blue-50 transition-colors flex items-center gap-3 group"
+                                >
+                                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center">
+                                    <Icon name="UserIcon" size={16} className="text-white" />
+                                  </div>
+                                  <div className="flex-1">
+                                    <p className="font-semibold text-slate-800 group-hover:text-blue-600">{commercial.name}</p>
+                                    <p className="text-xs text-slate-500">Commercial</p>
+                                  </div>
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -626,9 +777,7 @@ export default function DashboardInteractive() {
                         <th className="px-2 py-3 w-[120px] text-center">Actions</th>
                       </tr>
                     </thead>
-
-                    <tbody>
-                      {visitesLoading && (
+                    <tbody>{visitesLoading && (
                         <tr>
                           <td
                             colSpan={12}
@@ -637,8 +786,7 @@ export default function DashboardInteractive() {
                             Chargement des visites...
                           </td>
                         </tr>
-                      )}
-                      {!visitesLoading && visites.length === 0 && (
+                      )}{!visitesLoading && visites.length === 0 && (
                         <tr>
                           <td
                             colSpan={12}
@@ -647,9 +795,7 @@ export default function DashboardInteractive() {
                             Aucune visite ne correspond à vos critères.
                           </td>
                         </tr>
-                      )}
-                      {!visitesLoading &&
-                        visites.map((visite) => {
+                      )}{!visitesLoading && visites.map((visite) => {
                           const canManage = canManageVisite(visite);
 
                           return (
@@ -943,8 +1089,7 @@ export default function DashboardInteractive() {
                               </td>
                             </tr>
                           );
-                        })}
-                    </tbody>
+                        })}</tbody>
                   </table>
                 </div>
 
