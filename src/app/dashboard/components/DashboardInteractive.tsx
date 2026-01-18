@@ -15,6 +15,7 @@ import PerformanceChart from './PerformanceChart';
 import TeamMemberCard from './TeamMemberCard';
 import FilterPanel from './FilterPanel';
 import RdvListCard from './RdvListCard';
+import CalendarView from './CalendarView';
 
 interface KPIData {
   title: string;
@@ -1233,6 +1234,14 @@ export default function DashboardInteractive() {
                     </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Calendrier des Rendez-vous */}
+              <div className="mt-6">
+                <CalendarView 
+                  currentUserRole={currentUserRole}
+                  currentUserId={currentUserId}
+                />
               </div>
             </div>
 
