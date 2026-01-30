@@ -18,67 +18,68 @@ module.exports = {
     },
     extend: {
       colors: {
-        border: "var(--color-border)", /* white with opacity */
-        input: "var(--color-input)", /* white with opacity */
-        ring: "var(--color-ring)", /* deep-purple-a200 */
-        background: "var(--color-background)", /* gray-950 */
-        foreground: "var(--color-foreground)", /* white */
+        border: "var(--color-border)",
+        input: "var(--color-input)",
+        ring: "var(--color-ring)",
+        background: "var(--color-background)",
+        foreground: "var(--color-foreground)",
         primary: {
-          DEFAULT: "var(--color-primary)", /* indigo-900 */
-          foreground: "var(--color-primary-foreground)", /* white */
+          DEFAULT: "var(--color-primary)", /* RFIDIA Purple */
+          foreground: "var(--color-primary-foreground)",
+          light: "var(--color-purple-light)",
+          dark: "var(--color-purple-dark)",
         },
         secondary: {
-          DEFAULT: "var(--color-secondary)", /* deep-purple-a200 */
-          foreground: "var(--color-secondary-foreground)", /* white */
+          DEFAULT: "var(--color-secondary)", /* RFIDIA Coral */
+          foreground: "var(--color-secondary-foreground)",
+          light: "var(--color-coral-light)",
         },
         destructive: {
-          DEFAULT: "var(--color-destructive)", /* red-500 */
-          foreground: "var(--color-destructive-foreground)", /* white */
+          DEFAULT: "var(--color-destructive)",
+          foreground: "var(--color-destructive-foreground)",
         },
         muted: {
-          DEFAULT: "var(--color-muted)", /* gray-900 */
-          foreground: "var(--color-muted-foreground)", /* blue-gray-300 */
+          DEFAULT: "var(--color-muted)",
+          foreground: "var(--color-muted-foreground)",
         },
         accent: {
-          DEFAULT: "var(--color-accent)", /* green-a400 */
-          foreground: "var(--color-accent-foreground)", /* gray-950 */
+          DEFAULT: "var(--color-accent)", /* RFIDIA Turquoise */
+          foreground: "var(--color-accent-foreground)",
+          light: "var(--color-turquoise-light)",
         },
         popover: {
-          DEFAULT: "var(--color-popover)", /* gray-900 */
-          foreground: "var(--color-popover-foreground)", /* white */
+          DEFAULT: "var(--color-popover)",
+          foreground: "var(--color-popover-foreground)",
         },
         card: {
-          DEFAULT: "var(--color-card)", /* gray-900 */
-          foreground: "var(--color-card-foreground)", /* white */
+          DEFAULT: "var(--color-card)",
+          foreground: "var(--color-card-foreground)",
         },
         success: {
-          DEFAULT: "var(--color-success)", /* green-500 */
-          foreground: "var(--color-success-foreground)", /* white */
+          DEFAULT: "var(--color-success)",
+          foreground: "var(--color-success-foreground)",
         },
         warning: {
-          DEFAULT: "var(--color-warning)", /* orange-500 */
-          foreground: "var(--color-warning-foreground)", /* white */
+          DEFAULT: "var(--color-warning)",
+          foreground: "var(--color-warning-foreground)",
         },
         error: {
-          DEFAULT: "var(--color-error)", /* red-500 */
-          foreground: "var(--color-error-foreground)", /* white */
+          DEFAULT: "var(--color-error)",
+          foreground: "var(--color-error-foreground)",
         },
-        navy: {
-          deep: "var(--color-navy-deep)", /* indigo-950 */
+        rfidia: {
+          purple: "var(--color-primary)",
+          coral: "var(--color-secondary)",
+          turquoise: "var(--color-accent)",
+          'purple-light': "var(--color-purple-light)",
+          'purple-dark': "var(--color-purple-dark)",
+          'coral-light': "var(--color-coral-light)",
+          'turquoise-light': "var(--color-turquoise-light)",
         },
-        violet: {
-          vibrant: "var(--color-violet-vibrant)", /* violet-600 */
-        },
-        teal: {
-          accent: "var(--color-teal-accent)", /* teal-400 */
-        },
-        midnight: "var(--color-midnight)", /* slate-900 */
         text: {
-          primary: "var(--color-text-primary)", /* slate-200 */
-          secondary: "var(--color-text-secondary)", /* slate-400 */
-        },
-        cta: {
-          orange: "var(--color-cta-orange)", /* amber-500 */
+          primary: "var(--color-text-primary)",
+          secondary: "var(--color-text-secondary)",
+          light: "var(--color-text-light)",
         },
       },
       borderRadius: {
@@ -137,9 +138,10 @@ module.exports = {
         "gradient-flow": "gradient-flow 8s ease infinite",
       },
       boxShadow: {
-        'elevated': '0 4px 20px rgba(124, 77, 255, 0.15)',
-        'prominent': '0 8px 40px rgba(26, 35, 126, 0.25)',
-        'depth-layered': '0 4px 20px rgba(79, 70, 229, 0.15), 0 8px 40px rgba(79, 70, 229, 0.1), 0 16px 80px rgba(79, 70, 229, 0.05)',
+        'elevated': '0 4px 20px rgba(107, 76, 154, 0.12)',
+        'prominent': '0 8px 40px rgba(107, 76, 154, 0.18)',
+        'depth-layered': '0 2px 8px rgba(107, 76, 154, 0.08), 0 4px 16px rgba(107, 76, 154, 0.06), 0 8px 32px rgba(107, 76, 154, 0.04)',
+        'rfidia': '0 4px 24px rgba(107, 76, 154, 0.15), 0 2px 12px rgba(232, 93, 117, 0.1)',
       },
     },
   },

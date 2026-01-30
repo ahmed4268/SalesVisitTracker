@@ -42,11 +42,11 @@ export default function LoginInteractive() {
           <div className="text-center mb-8 animate-slide-in-from-top">
             <div className="flex items-center justify-center mb-6">
               <Image
-                src="/assets/images/image001.png"
-                alt="SalesTracker Pro"
-                width={500}
-                height={500}
-                className="w-40 sm:w-52 md:w-64 h-auto drop-shadow-[0_0_40px_rgba(167,139,250,0.9)]"
+                src="/assets/images/rfidia.png"
+                alt="RFIDIA Technology"
+                width={400}
+                height={200}
+                className="w-64 sm:w-72 md:w-80 h-auto drop-shadow-[0_0_40px_rgba(107,76,154,0.6)]"
                 priority
               />
             </div>
@@ -54,8 +54,8 @@ export default function LoginInteractive() {
             <h4 className="text-4xl font-bold text-white mb-2 tracking-tight">
               SalesTracker Pro
             </h4>
-            <p className="text-slate-400 text-sm">
-              Plateforme de gestion des visites commerciales
+            <p className="text-slate-300 text-sm font-medium">
+              Powered by RFIDIA Technology
             </p>
           </div>
 

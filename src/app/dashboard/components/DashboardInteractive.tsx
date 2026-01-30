@@ -489,15 +489,16 @@ export default function DashboardInteractive() {
     <>
       <ToastContainer toasts={toasts} onRemove={removeToast} />
       <div className="min-h-screen bg-background">
-      {/* Animated Background */}
+      {/* Animated Background with RFIDIA colors */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-gradient-to-br from-primary/8 to-transparent rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-secondary/8 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gradient-to-br from-accent/6 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
 
       <div className="relative">
         {/* Main Content */}
-        <main className="pt-24 pb-12 px-4 lg:px-8">
+        <main className="pt-28 pb-12 px-4 lg:px-8">
           <div className="max-w-[1920px] mx-auto">
             {/* Header Section */}
             <div className="mb-8">
@@ -506,7 +507,7 @@ export default function DashboardInteractive() {
                   <h1 className="text-4xl font-display font-bold text-foreground mb-2">
                     Tableau de Bord
                   </h1>
-                  <p className="text-muted-foreground font-body">
+                  <p className="text-text-secondary font-body text-lg">
                     Vue d'ensemble de vos performances commerciales
                   </p>
                 </div>
@@ -545,7 +546,7 @@ export default function DashboardInteractive() {
                           error('Erreur lors de l\'export Excel');
                         }
                       }}
-                      className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-cta font-semibold hover:shadow-2xl transform hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2"
+                      className="px-6 py-3 rounded-xl gradient-rfidia text-white font-cta font-semibold hover:shadow-rfidia transform hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2"
                     >
                       <Icon name="ArrowDownTrayIcon" size={18} />
                       Exporter mes visites
@@ -556,7 +557,7 @@ export default function DashboardInteractive() {
                     <div className="relative">
                       <button 
                         onClick={() => setShowExportMenu(!showExportMenu)}
-                        className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-cta font-semibold hover:shadow-2xl transform hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2"
+                        className="px-6 py-3 rounded-xl gradient-rfidia text-white font-cta font-semibold hover:shadow-rfidia transform hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2"
                       >
                         <Icon name="ArrowDownTrayIcon" size={18} />
                         Exporter Excel

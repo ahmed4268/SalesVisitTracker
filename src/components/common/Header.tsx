@@ -94,96 +94,89 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-gray-800 shadow-elevated border-b border-gray-700 backdrop-blur-sm">
-      <div className="flex items-center justify-between h-16 px-4 lg:px-8">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-elevated border-b border-border backdrop-blur-sm">
+      <div className="flex items-center justify-between h-20 px-4 lg:px-8">
         {/* Logo Section */}
-        <Link href="/dashboard" className="flex items-center space-x-3 group">
+        <Link href="/dashboard" className="flex items-center space-x-4 group">
           <div className="relative">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center transform transition-smooth group-hover:scale-105 group-hover:rotate-3">
-              <svg
-                className="w-6 h-6 text-white"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
-            <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-full animate-pulse"></div>
+            <img 
+              src="/assets/images/rfidia.png" 
+              alt="RFIDIA Technology" 
+              className="h-12 w-auto object-contain transform transition-smooth group-hover:scale-105"
+            />
           </div>
-          <div className="hidden sm:block">
-            <h1 className="text-xl font-display font-bold text-white tracking-tight">
+          <div className="hidden lg:block h-10 w-px bg-border"></div>
+          <div className="hidden lg:block">
+            <h1 className="text-xl font-display font-bold text-gradient-rfidia tracking-tight">
               SalesTracker Pro
             </h1>
-            <p className="text-xs text-white/80 font-body">Luxury Technology</p>
+            <p className="text-xs text-text-secondary font-body">Powered by RFIDIA Technology</p>
           </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center space-x-1">
+        <nav className="hidden lg:flex items-center space-x-2">
           {navigationItems.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-cta font-medium text-white/80 hover:text-white hover:bg-primary/10 transition-smooth group"
+              className="flex items-center space-x-2 px-4 py-2.5 rounded-xl text-sm font-cta font-medium text-text-secondary hover:text-primary hover:bg-gradient-rfidia-subtle transition-smooth group relative overflow-hidden"
             >
               <Icon
                 name={item.icon as any}
                 size={20}
-                className="text-white group-hover:text-accent transition-smooth"
+                className="text-text-secondary group-hover:text-primary transition-smooth relative z-10"
               />
-              <span>{item.name}</span>
+              <span className="relative z-10">{item.name}</span>
+              <div className="absolute inset-0 bg-gradient-rfidia opacity-0 group-hover:opacity-5 transition-smooth"></div>
             </Link>
           ))}
         </nav>
 
         {/* Right Section - Desktop */}
-        <div className="hidden lg:flex items-center space-x-4 text-white">
-          <button className="relative p-2 rounded-lg text-white/80 hover:text-white hover:bg-primary/10 transition-smooth">
+        <div className="hidden lg:flex items-center space-x-4">
+          <button className="relative p-2.5 rounded-xl text-text-secondary hover:text-primary hover:bg-gradient-rfidia-subtle transition-smooth">
             <Icon name="BellIcon" size={22} />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-secondary rounded-full ring-2 ring-white"></span>
           </button>
 
-          <div className="w-px h-6 bg-white/20"></div>
+          <div className="w-px h-8 bg-border"></div>
 
           <div className="relative">
             <button
               type="button"
               onClick={toggleProfileMenu}
-              className="flex items-center space-x-3 p-2 rounded-lg text-white hover:bg-primary/10 transition-smooth group"
+              className="flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-gradient-rfidia-subtle transition-smooth group"
             >
-              <div className="w-9 h-9 bg-gradient-to-br from-secondary to-accent rounded-full flex items-center justify-center text-sm font-display font-semibold text-white">
+              <div className="w-10 h-10 gradient-rfidia rounded-full flex items-center justify-center text-sm font-display font-semibold text-white shadow-elevated">
                 {userInitials}
               </div>
               <div className="hidden xl:block text-left">
-                <p className="text-sm font-cta font-semibold text-white">{userName ?? 'Sales Pro'}</p>
-                <p className="text-xs text-white/80">{userRole}</p>
+                <p className="text-sm font-cta font-semibold text-text-primary">{userName ?? 'Sales Pro'}</p>
+                <p className="text-xs text-text-secondary">{userRole}</p>
               </div>
               <Icon
                 name="ChevronDownIcon"
                 size={16}
-                className="text-white/80 group-hover:text-white transition-smooth"
+                className="text-text-secondary group-hover:text-primary transition-smooth"
               />
             </button>
 
             {isProfileMenuOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-gray-900 border border-gray-700 rounded-lg shadow-lg py-1 text-sm z-50">
+              <div className="absolute right-0 mt-2 w-52 bg-white border border-border rounded-xl shadow-prominent py-2 text-sm z-50">
                 <Link
                   href="/profile"
                   onClick={() => setIsProfileMenuOpen(false)}
-                  className="w-full px-3 py-2 text-left text-white/80 hover:text-white hover:bg-gray-800 transition-smooth flex items-center gap-2"
+                  className="w-full px-4 py-2.5 text-left text-text-secondary hover:text-primary hover:bg-gradient-rfidia-subtle transition-smooth flex items-center gap-3"
                 >
                   <Icon name="UserIcon" size={18} />
                   <span>Mon Profil</span>
                 </Link>
-                <div className="h-px bg-gray-700 my-1 mx-2"></div>
+                <div className="h-px bg-border my-2 mx-3"></div>
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="w-full px-3 py-2 text-left text-white/80 hover:text-white hover:bg-primary/20 transition-smooth flex items-center gap-2"
+                  className="w-full px-4 py-2.5 text-left text-error hover:text-white hover:bg-error/10 transition-smooth flex items-center gap-3"
                 >
                   <Icon name="ArrowRightOnRectangleIcon" size={18} />
                   <span>Se déconnecter</span>
@@ -196,7 +189,7 @@ const Header = () => {
         {/* Mobile Menu Button */}
         <button
           onClick={toggleMobileMenu}
-          className="lg:hidden p-2 rounded-lg text-white/80 hover:text-white hover:bg-primary/10 transition-smooth"
+          className="lg:hidden p-2.5 rounded-xl text-text-secondary hover:text-primary hover:bg-gradient-rfidia-subtle transition-smooth"
           aria-label="Toggle mobile menu"
         >
           <Icon name={isMobileMenuOpen ? 'XMarkIcon' : 'Bars3Icon'} size={24} />
@@ -205,33 +198,33 @@ const Header = () => {
 
       {/* Mobile Navigation Menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-primary/95 border-t border-border/30 animate-slide-in-from-top">
+        <div className="lg:hidden bg-white border-t border-border animate-slide-in-from-top shadow-prominent">
           <nav className="px-4 py-4 space-y-2">
             {navigationItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-cta font-medium text-white/80 hover:text-white hover:bg-primary/20 transition-smooth"
+                className="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-cta font-medium text-text-secondary hover:text-primary hover:bg-gradient-rfidia-subtle transition-smooth"
               >
-                <Icon name={item.icon as any} size={20} className="text-white" />
+                <Icon name={item.icon as any} size={20} className="text-text-secondary" />
                 <span>{item.name}</span>
               </Link>
             ))}
 
-            <div className="pt-4 border-t border-border/40 space-y-2">
+            <div className="pt-4 border-t border-border space-y-2">
               <Link 
                 href="/profile"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center justify-between w-full px-4 py-3 rounded-lg text-sm font-cta font-medium text-white/80 hover:bg-gray-800 transition-smooth"
+                className="flex items-center justify-between w-full px-4 py-3 rounded-xl text-sm font-cta font-medium hover:bg-gradient-rfidia-subtle transition-smooth"
               >
                 <div className="flex items-center space-x-3">
-                  <div className="w-9 h-9 bg-gradient-to-br from-secondary to-accent rounded-full flex items-center justify-center text-sm font-display font-semibold text-white">
+                  <div className="w-10 h-10 gradient-rfidia rounded-full flex items-center justify-center text-sm font-display font-semibold text-white shadow-elevated">
                     {userInitials}
                   </div>
                   <div className="text-left">
-                    <p className="text-sm font-cta font-semibold text-white">{userName ?? 'Sales Pro'}</p>
-                    <p className="text-xs text-white/80">{userRole}</p>
+                    <p className="text-sm font-cta font-semibold text-text-primary">{userName ?? 'Sales Pro'}</p>
+                    <p className="text-xs text-text-secondary">{userRole}</p>
                   </div>
                 </div>
               </Link>
@@ -239,10 +232,10 @@ const Header = () => {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-cta font-medium text-red-400 hover:text-white hover:bg-red-500/20 transition-smooth"
+                className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-cta font-medium text-error hover:bg-error/10 transition-smooth"
               >
                 <span>Se déconnecter</span>
-                <Icon name="ArrowRightOnRectangleIcon" size={18} className="text-red-400" />
+                <Icon name="ArrowRightOnRectangleIcon" size={18} className="text-error" />
               </button>
             </div>
           </nav>

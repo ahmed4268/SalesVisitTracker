@@ -7,11 +7,11 @@ export const viewport = {
 };
 
 export const metadata = {
-  title: 'Next.js with Tailwind CSS',
-  description: 'A boilerplate project with Next.js and Tailwind CSS',
+  title: 'SalesTracker Pro - RFIDIA Technology',
+  description: 'Professional sales tracking and management platform powered by RFIDIA Technology',
   icons: {
     icon: [
-      { url: '/favicon.ico', type: 'image/x-icon' }
+      { url: '/assets/favicon.ico', type: 'image/x-icon' }
     ],
   },
 };

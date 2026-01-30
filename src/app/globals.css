@@ -9,62 +9,66 @@
 
 @layer base {
   :root {
-    /* Primary Colors */
-    --color-primary: #1a237e; /* indigo-900 - Deep navy authority */
+    /* RFIDIA Brand Colors - Based on logo */
+    /* Primary Colors - Purple/Violet from logo */
+    --color-primary: #6B4C9A; /* Deep purple from logo */
     --color-primary-foreground: #ffffff; /* white */
     
-    /* Secondary Colors */
-    --color-secondary: #7c4dff; /* deep-purple-a200 - Violet innovation */
+    /* Secondary Colors - Coral/Pink gradient from logo */
+    --color-secondary: #E85D75; /* Coral pink from logo */
     --color-secondary-foreground: #ffffff; /* white */
     
-    /* Accent Colors */
-    --color-accent: #00e676; /* green-a400 - Success states */
-    --color-accent-foreground: #0f1419; /* gray-950 */
+    /* Accent Colors - Turquoise/Cyan from logo */
+    --color-accent: #4FC3DC; /* Turquoise blue from logo */
+    --color-accent-foreground: #ffffff; /* white */
     
-    /* Background Colors */
-    --color-background: #0f1419; /* gray-950 - Rich dark canvas */
-    --color-foreground: #ffffff; /* white */
+    /* Background Colors - Clean, modern light background */
+    --color-background: #F8F9FC; /* Light gray-blue background */
+    --color-foreground: #1A1A2E; /* Dark text */
     
     /* Surface Colors */
-    --color-card: #1e2328; /* gray-900 - Elevated surfaces */
-    --color-card-foreground: #ffffff; /* white */
+    --color-card: #FFFFFF; /* White cards */
+    --color-card-foreground: #1A1A2E; /* Dark text */
     
-    --color-popover: #1e2328; /* gray-900 */
-    --color-popover-foreground: #ffffff; /* white */
+    --color-popover: #FFFFFF; /* White */
+    --color-popover-foreground: #1A1A2E; /* Dark text */
     
     /* Muted Colors */
-    --color-muted: #1e2328; /* gray-900 */
-    --color-muted-foreground: #b0bec5; /* blue-gray-300 */
+    --color-muted: #F1F3F9; /* Light muted background */
+    --color-muted-foreground: #6B7280; /* Gray text */
     
     /* Border & Input */
-    --color-border: rgba(255, 255, 255, 0.1); /* white with opacity */
-    --color-input: rgba(255, 255, 255, 0.1); /* white with opacity */
-    --color-ring: #7c4dff; /* deep-purple-a200 */
+    --color-border: #E5E7EB; /* Light gray border */
+    --color-input: #F9FAFB; /* Very light gray input */
+    --color-ring: #6B4C9A; /* Primary purple for focus rings */
     
     /* Status Colors */
-    --color-success: #4caf50; /* green-500 */
+    --color-success: #10B981; /* Green */
     --color-success-foreground: #ffffff; /* white */
     
-    --color-warning: #ff9800; /* orange-500 */
+    --color-warning: #F59E0B; /* Amber */
     --color-warning-foreground: #ffffff; /* white */
     
-    --color-error: #f44336; /* red-500 */
+    --color-error: #EF4444; /* Red */
     --color-error-foreground: #ffffff; /* white */
     
-    --color-destructive: #f44336; /* red-500 */
+    --color-destructive: #EF4444; /* Red */
     --color-destructive-foreground: #ffffff; /* white */
     
-    /* Additional Brand Colors */
-    --color-navy-deep: #1e1b4b; /* indigo-950 */
-    --color-violet-vibrant: #7c3aed; /* violet-600 */
-    --color-teal-accent: #06d6a0; /* teal-400 */
-    --color-midnight: #0f172a; /* slate-900 */
-    --color-text-primary: #e2e8f0; /* slate-200 */
-    --color-text-secondary: #94a3b8; /* slate-400 */
-    --color-cta-orange: #f59e0b; /* amber-500 */
+    /* Additional RFIDIA Brand Colors */
+    --color-purple-light: #9B7EBD; /* Lighter purple */
+    --color-purple-dark: #4A3567; /* Darker purple */
+    --color-coral-light: #F28B9D; /* Lighter coral */
+    --color-turquoise-light: #7DD3E8; /* Lighter turquoise */
+    --color-gradient-start: #6B4C9A; /* Purple */
+    --color-gradient-middle: #E85D75; /* Coral */
+    --color-gradient-end: #4FC3DC; /* Turquoise */
+    --color-text-primary: #1A1A2E; /* Dark text */
+    --color-text-secondary: #6B7280; /* Gray text */
+    --color-text-light: #9CA3AF; /* Light gray text */
     
     /* Spacing & Layout */
-    --radius: 0.5rem;
+    --radius: 0.75rem;
   }
 }
 
@@ -97,23 +101,23 @@
   }
   
   .glassmorphism {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(107, 76, 154, 0.1);
   }
   
   .shadow-elevated {
-    box-shadow: 0 4px 20px rgba(124, 77, 255, 0.15);
+    box-shadow: 0 4px 20px rgba(107, 76, 154, 0.12);
   }
   
   .shadow-prominent {
-    box-shadow: 0 8px 40px rgba(26, 35, 126, 0.25);
+    box-shadow: 0 8px 40px rgba(107, 76, 154, 0.18);
   }
   
   .shadow-depth-layered {
-    box-shadow: 0 4px 20px rgba(79, 70, 229, 0.15), 
-                0 8px 40px rgba(79, 70, 229, 0.1), 
-                0 16px 80px rgba(79, 70, 229, 0.05);
+    box-shadow: 0 2px 8px rgba(107, 76, 154, 0.08), 
+                0 4px 16px rgba(107, 76, 154, 0.06), 
+                0 8px 32px rgba(107, 76, 154, 0.04);
   }
   
   .transition-smooth {
@@ -122,5 +126,20 @@
   
   .transition-quick {
     transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .gradient-rfidia {
+    background: linear-gradient(135deg, #6B4C9A 0%, #E85D75 50%, #4FC3DC 100%);
+  }
+  
+  .gradient-rfidia-subtle {
+    background: linear-gradient(135deg, rgba(107, 76, 154, 0.1) 0%, rgba(232, 93, 117, 0.1) 50%, rgba(79, 195, 220, 0.1) 100%);
+  }
+  
+  .text-gradient-rfidia {
+    background: linear-gradient(135deg, #6B4C9A 0%, #E85D75 50%, #4FC3DC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }

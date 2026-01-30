@@ -172,7 +172,7 @@ export default function LoginForm() {
 
           <button
             type="submit"
-            className="w-full py-4 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-xl font-semibold hover:from-violet-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-violet-500/50"
+            className="w-full py-4 gradient-rfidia text-white rounded-xl font-semibold hover:opacity-90 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-rfidia"
           >
             Envoyer le lien
           </button>
@@ -248,7 +248,7 @@ export default function LoginForm() {
       <button
         type="submit"
         disabled={isLoading}
-        className="relative w-full py-4 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-xl font-semibold hover:from-violet-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg hover:shadow-violet-500/50 overflow-hidden group"
+        className="relative w-full py-4 gradient-rfidia text-white rounded-xl font-semibold hover:opacity-90 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg hover:shadow-rfidia overflow-hidden group"
       >
         <span className={`${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}>
           Se connecter

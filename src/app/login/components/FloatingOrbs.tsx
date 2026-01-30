@@ -20,6 +20,13 @@ export default function FloatingOrbs() {
     { id: 4, size: 350, left: '20%', top: '70%', delay: 3, duration: 22 },
   ]);
 
+  const orbColors = [
+    'radial-gradient(circle, rgba(107, 76, 154, 0.8) 0%, transparent 70%)', // Purple
+    'radial-gradient(circle, rgba(232, 93, 117, 0.8) 0%, transparent 70%)', // Coral
+    'radial-gradient(circle, rgba(79, 195, 220, 0.8) 0%, transparent 70%)', // Turquoise
+    'radial-gradient(circle, rgba(155, 126, 189, 0.8) 0%, transparent 70%)', // Light Purple
+  ];
+
   useEffect(() => {
     setIsHydrated(true);
   }, []);
@@ -30,7 +37,7 @@ export default function FloatingOrbs() {
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 2 }}>
-      {orbs.map((orb) => (
+      {orbs.map((orb, index) => (
         <div
           key={orb.id}
           className="absolute rounded-full blur-3xl opacity-20 animate-float"
@@ -39,7 +46,7 @@ export default function FloatingOrbs() {
             height: `${orb.size}px`,
             left: orb.left,
             top: orb.top,
-            background: 'radial-gradient(circle, rgba(139, 92, 246, 0.8) 0%, transparent 70%)',
+            background: orbColors[index % orbColors.length],
             animationDelay: `${orb.delay}s`,
             animationDuration: `${orb.duration}s`,
           }}
