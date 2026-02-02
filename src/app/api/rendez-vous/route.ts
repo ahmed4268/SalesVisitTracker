@@ -313,7 +313,7 @@ export async function sendRendezVousNotificationEmail(payload: RendezVousEmailPa
   });
 
   const fromAddress = process.env.SMTP_FROM || process.env.EMAIL_USER;
-  const toAddress = 'k.oussema@rfidtunisie.com';
+  const toAddress = 'direction@rfidtunisie.com';
 
   const subjectEntreprise = form.entreprise || (visite && visite.entreprise) || '';
   const subjectDate = form.date_rdv || '';
