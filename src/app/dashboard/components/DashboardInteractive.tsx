@@ -555,14 +555,17 @@ export default function DashboardInteractive() {
                   
                   {(currentUserRole === 'consultant' || currentUserRole === 'admin') && (
                     <div className="relative">
-                      <button 
-                        onClick={() => setShowExportMenu(!showExportMenu)}
-                        className="px-6 py-3 rounded-xl gradient-rfidia text-white font-cta font-semibold hover:shadow-rfidia transform hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2"
-                      >
-                        <Icon name="ArrowDownTrayIcon" size={18} />
-                        Exporter Excel
-                        <Icon name="ChevronDownIcon" size={16} />
-                      </button>
+                    <button 
+  onClick={() => setShowExportMenu(!showExportMenu)}
+  className="px-6 py-3 rounded-xl bg-[#7DD3E8] text-black font-cta font-semibold 
+             hover:shadow-rfidia transform hover:-translate-y-0.5 
+             transition-all duration-300 flex items-center gap-2"
+>
+  <Icon name="ArrowDownTrayIcon" size={18} />
+  Exporter Excel
+  <Icon name="ChevronDownIcon" size={16} />
+</button>
+
                       
                       {showExportMenu && (
                         <>
